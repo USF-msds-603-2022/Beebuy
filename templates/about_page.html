@@ -3,10 +3,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Yunhe</title>
+    <title>About Us</title>
 </head>
 <body>
-    <img src="{{ user_image }}" alt="User Image",width="50" height="60"><h>Yunhe</1>
-    <a href="https://www.linkedin.com/in/yunhe-j-380651172/">LinkedIn</a>
+    <h1>About Us</h1>
+    <table>
+        {%for i in member_list%} 
+        <!-- {'name':'Muhuan Lyu','role':'CEO','linkedin':'https://www.linkedin.com/in/yunhe-j-380651172/','profile':'yunhe.png'} -->
+            <tr>
+                <td><img src="{{i['profile']}}" width="100", height="100"></td>
+
+                <td style="font-family:Verdana, sans-serif">
+                    {{i['name']}}<br>
+                    {{i['role']}} <br><br>
+                    LinkedIn: <a href="{{i['linkedin']}}">{{i['linkedin']}}</a>
+                </td>
+            </tr>
+        {%endfor%}
+        </table>
+
 </body>
 </html>
