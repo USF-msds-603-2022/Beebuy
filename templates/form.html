@@ -1,5 +1,5 @@
 {#  This file was part of Flask-Bootstrap and was modified under the terms of
- its BSD License. Copyright (c) 2013, Marc Brinkmann. All rights reserved. #}
+its BSD License. Copyright (c) 2013, Marc Brinkmann. All rights reserved. #}
 
 {% macro render_hidden_errors(form) %}
     {%- if form.errors %}
@@ -17,9 +17,7 @@
     {% if form_type == "horizontal" %}
         {% if add_group %}
             <div class="form-group row{% if required %} required{% endif %}">{% endif %}
-        <div class="offset-{{ horizontal_columns[0] }}-{{ horizontal_columns[1] }}
-              col-{{ horizontal_columns[0] }}-{{ horizontal_columns[2] }}
-             ">
+        <div class="offset-{{ horizontal_columns[0] }}-{{ horizontal_columns[1] }} col-{{ horizontal_columns[0] }}-{{ horizontal_columns[2] }}">
     {% endif %}
 {{ caller() }}
 

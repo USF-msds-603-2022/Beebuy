@@ -45,6 +45,13 @@ def basic():
     top10.append({'name':'VIZIO','img_address':'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6459/6459559_sd.jpg;maxHeight=640;maxWidth=550','profile':'/static/item_folder/vizio.png'})
     return render_template('main.html',suggestion = suggestion, top10=top10)
     
+@app.route("/suggestion")
+def suggest():
+    return render_template('suggestion.html')
+    
+@app.route("/dontbuy")
+def dontbuy():
+    return render_template('dontbuy.html')
 
 @app.route("/about")
 def following():
