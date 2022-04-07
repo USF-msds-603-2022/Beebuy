@@ -2,7 +2,9 @@ from flask import Flask,  render_template
 from wtforms.fields import *
 from flask_wtf import FlaskForm, CSRFProtect
 from flask_bootstrap import Bootstrap4, SwitchField
-
+from flask import Flask, render_template, request, flash, Markup, redirect, url_for
+from wtforms.validators import DataRequired, Length, Regexp
+from wtforms.fields import *
 # import os
 
 # member_folder = os.path.join('static','member_folder')
@@ -15,6 +17,21 @@ csrf = CSRFProtect(app)
 
 class SearchBar(FlaskForm):
     search = SearchField()
+
+
+class Register(FlaskForm):
+    username = StringField('Username', validators=[DataRequired(), Length(1, 20)])
+    email = EmailField('Email')
+    password = PasswordField('Password', validators=[DataRequired(), Length(8, 150)])
+    confirmpassword = PasswordField('Confirm Password', validators=[DataRequired(), Length(8, 150)])
+    submit = SubmitField('Register')
+
+class Login(FlaskForm):
+    username = StringField('Username', validators=[DataRequired(), Length(1, 20)])
+    email = EmailField('Email')
+    password = PasswordField('Password', validators=[DataRequired(), Length(8, 150)])
+    submit = SubmitField('submit')
+
 
 @app.route("/")
 def basic():
@@ -33,7 +50,29 @@ def following():
     member_list.append({'name':'Jaysen Shi','role':'Data Engineer','linkedin':'https://www.linkedin.com/in/jaysenshi/','profile':'/static/member_folder/jaysen.png'})
     return render_template('about_page.html',member_list = member_list)
 
+@app.route('/register',methods=['GET', 'POST'])
+def register():
+    form = Register()
 
+    if form.validate_on_submit():
+        # if form.password()==form.confirmpassword():
+        # flash('Form validated!')
+        return redirect(url_for('basic'))
+    return render_template(
+        'user.html',
+        form=form
+    ) 
+
+@app.route('/login',methods=['GET', 'POST'])
+def login():
+    form = Login()
+    if form.validate_on_submit():
+        # flash('Form validated!')
+        return redirect(url_for('basic'))
+    return render_template(
+        'user.html',
+        form=form
+    ) 
 
 
 if __name__=='__main__':
