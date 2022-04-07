@@ -2229,7 +2229,7 @@ progress {
 }
 .form-control:-ms-input-placeholder {
   color: #6c757d;
-  opacity: ;
+  opacity: 1;
 }
 .form-control::placeholder {
   color: #6c757d;
@@ -11286,7 +11286,9 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
-
+#wrapper {
+  overflow-x: hidden;
+}
 
 #sidebar-wrapper {
   min-height: 100vh;
@@ -11300,7 +11302,7 @@ textarea.form-control-lg {
 }
 
 #sidebar-wrapper .list-group {
-  width: 10rem;
+  width: 15rem;
 }
 
 #page-content-wrapper {
