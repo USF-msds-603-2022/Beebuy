@@ -18,7 +18,15 @@ class SearchBar(FlaskForm):
 
 @app.route("/")
 def basic():
-    return render_template("main.html")
+    suggestion = []
+    top10 = []
+    suggestion.append({'name':'Samsung','img_address':'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6452/6452997_sd.jpg;maxHeight=640;maxWidth=550','img':'/static/item_folder/samsung.png'})
+    suggestion.append({'name':'Sony','img_address':'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6453/6453619_sd.jpg;maxHeight=640;maxWidth=550','img':'/static/item_folder/sony.png'})
+    suggestion.append({'name':'Lg','img_address':'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6458/6458623_sd.jpg;maxHeight=640;maxWidth=550','profile':'/static/item_folder/lg.png'})
+    top10.append({'name':'TCL','img_address':'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6470/6470251_sd.jpg;maxHeight=640;maxWidth=550','img':'/static/item_folder/tcl.png'})
+    top10.append({'name':'Insignia','img_address':'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6456/6456970_sd.jpg;maxHeight=640;maxWidth=550','img':'/static/item_folder/insignia.png'})
+    top10.append({'name':'VIZIO','img_address':'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6459/6459559_sd.jpg;maxHeight=640;maxWidth=550','profile':'/static/item_folder/vizio.png'})
+    return render_template('main.html',suggestion = suggestion, top10=top10)
     
 
 @app.route("/about")

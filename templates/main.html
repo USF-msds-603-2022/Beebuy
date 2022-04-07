@@ -6,9 +6,25 @@
 
     <div class="container-fluid">
         <h1 class="mt-4">Don't Buy Them</h1>
-        <p>some boxes</p>
+        <div class="container">
+            <div class="row ">
+                {%for j in top10%}    
+                    <div class="col-lg-4 col-md-12">
+                        <img src="{{j['img_address']}}" width="150", height="100" class="rounded float-left" alt="...">
+                    </div>
+                {%endfor%}
+            </div>
+        </div>
         <h1 class="mt-4">Suggested Items</h1>
-        <p>some boxes</p>
+        <div class="container">
+            <div class="row ">
+                {%for j in suggestion%}    
+                <div class="col-lg-4 col-md-12">
+                    <img src="{{j['img_address']}}" width="150", height="100" class="rounded float-left" alt="...">
+                </div>
+                {%endfor%}
+            </div>
+        </div>
         </p>
     </div>
 {% endblock %}
