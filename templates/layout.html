@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Simple Sidebar - Start Bootstrap Template</title>
+        <title>Don't Buy It</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
@@ -15,14 +15,13 @@
         <div class="d-flex" id="wrapper">
             <!-- Sidebar-->
             <div class="border-end bg-white" id="sidebar-wrapper">
-                <div class="sidebar-heading border-bottom bg-light">Don't Buy It</div>
+                <div class="sidebar-heading border-bottom bg-light" ><a href={{ url_for('basic') }} style = "color: #212529; text-decoration: none;">Don't Buy It</a></div>
                 <div class="list-group list-group-flush">
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href={{ url_for('basic') }}>Home</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Don't Buy</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Suggested</a>
 
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="about">About Us</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">User</a>
                 </div>
             </div>
             <!-- Page content wrapper-->
