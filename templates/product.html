@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+{#{% extends 'layout.html' %}#}
+{% extends 'layout.html' %}
+{% block content %}
+
+    <div class="container-fluid">
+        <h1 class="mt-4">Product Name (Get from original website)</h1>
+        <div class="container">
+            <div class="row ">
+                {%for j in top10%}    
+                    <div class="col-lg-4 col-md-12">
+                        <img src="{{j['img_address']}}" width="150", height="100" class="rounded float-left" alt="...">
+                    </div>
+                {%endfor%}
+            </div>
+        </div>
+        <h2 class="mt-4">Price History</h2>
+        <div class="container">
+            <div class="row ">
+                {%for j in suggestion%}    
+                <div class="col-lg-4 col-md-12">
+                    <img src="{{j['img_address']}}" width="150", height="100" class="rounded float-left" alt="...">
+                </div>
+                {%endfor%}
+            </div>
+        </div>
+        <h2 class="mt-4">Traits (hexagon graph here)</h2>
+        <div class="container">
+            <div class="row ">
+                {%for j in suggestion%}
+                <div class="col-lg-4 col-md-12">
+                    <img src="{{j['img_address']}}" width="150", height="100" class="rounded float-left" alt="...">
+                </div>
+                {%endfor%}
+            </div>
+        </div>
+        <h2 class="mt-4">Pros and Cons</h2>
+        <div class="container">
+            <div class="row ">
+                {%for j in suggestion%}
+                <div class="col-lg-4 col-md-12">
+                    <img src="{{j['img_address']}}" width="150", height="100" class="rounded float-left" alt="...">
+                </div>
+                {%endfor%}
+            </div>
+        </div>
+        <h2 class="mt-4">Add Your Review Here</h2>
+        <div class="container">
+            <div class="row ">
+                {%for j in suggestion%}
+                <div class="col-lg-4 col-md-12">
+                    <img src="{{j['img_address']}}" width="150", height="100" class="rounded float-left" alt="...">
+                </div>
+                {%endfor%}
+            </div>
+        </div>
+        </p>
+    </div>
+{% endblock %}
+
+
+
