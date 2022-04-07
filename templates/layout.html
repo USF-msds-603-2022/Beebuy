@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Simple Sidebar - Start Bootstrap Template</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{{url_for('static',filename = 'css/styles.css') }}" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="d-flex" id="wrapper">
+            <!-- Sidebar-->
+            <div class="border-end bg-white" id="sidebar-wrapper">
+                <div class="sidebar-heading border-bottom bg-light">Don't Buy It</div>
+                <div class="list-group list-group-flush">
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href={{ url_for('basic') }}>Home</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Don't Buy</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Suggested</a>
+
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="about">About Us</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">User</a>
+                </div>
+            </div>
+            <!-- Page content wrapper-->
+            <div id="page-content-wrapper">
+                <!-- Top navigation-->
+                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    <div class="container-fluid">
+                        <div class=“input-group rounded”>
+                        <input type=“search” class=“form-control rounded” placeholder=“Search” aria-label=“Search” aria-describedby=“search-addon” />
+                        <button type=“button” class=“btn btn-outline-primary”>search</button>
+                        </div>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Account</a>
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="#!">Sign in</a>
+                                        <a class="dropdown-item" href="#!">Register</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#!">Log out</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <!-- Page content-->
+                {% block content %}
+                <div class="container-fluid">
+                    <h1 class="mt-4">Don't Buy Them</h1>
+                    <p>some boxes</p>
+                    <h1 class="mt-4">Suggested Items</h1>
+                    <p>some boxes</p>
+                    </p>
+                </div>
+                {% endblock %}
+            </div>
+        </div>
+
+    </body>
+    <footer class="text-center">
+        {% block footer %}
+            <small> &copy; 2022 Don't Buy It Group</a>
+            </small>
+        {% endblock %}
+    </footer>
+</html>
