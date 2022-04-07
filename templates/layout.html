@@ -1,0 +1,62 @@
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Bootstrap-Flask Demo Application</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    {{ bootstrap.load_css() }}
+    <style>
+        pre {
+            background: #ddd;
+            padding: 0px;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        h2 {
+            margin-top: 20px;
+        }
+        footer {
+            margin: 20px;
+        }
+    </style>
+
+    {% macro render_nav_item(endpoint, text, badge='', use_li=False) %}
+    {% set active = True if request.endpoint and request.endpoint == endpoint else False %}
+    {% if use_li %}<li class="nav-item">{% endif %}
+    <a class="{% if not use_li %}nav-item {% endif %}nav-link{% if active %} active" aria-current="page{% endif %}"
+       href="{{ url_for(endpoint, **kwargs) }}">
+        {{ text }} {% if badge %}<span class="badge badge-light">{{ badge }}</span>{% endif %}
+    </a>
+    {% if use_li %}</li>{% endif %}
+{% endmacro %}
+
+
+{% block content %}
+    <h1>Don't Buy It</h1>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                {{ render_nav_item('basic', 'Home') }}
+                {{ render_nav_item('following', 'About Us') }}
+                <div class=“input-group rounded”>
+                    <input type=“search” class=“form-control rounded” placeholder=“Search” aria-label=“Search” aria-describedby=“search-addon” />
+                    <button type=“button” class=“btn btn-outline-primary”>search</button>
+                </div>
+
+            </ul>
+        </div>
+    </nav>
+    <footer class="text-center">
+        {% block footer %}
+            <small> &copy; 2022 Don't Buy It Group</a>
+            </small>
+        {% endblock %}
+    </footer>
+{% endblock %}
+</head>
+</html>

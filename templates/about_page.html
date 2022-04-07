@@ -1,11 +1,15 @@
 
 
-<!DOCTYPE html>
+
+{% extends 'layout.html' %}
+
 <html>
 <head>
     <title>About Us</title>
 </head>
 <body>
+{% block content %}
+    {% include 'nav.html' %}
     <h1>About Us</h1>
     <table>
         {%for i in member_list%} 
@@ -21,6 +25,6 @@
             </tr>
         {%endfor%}
         </table>
-
+{% endblock %}
 </body>
 </html>

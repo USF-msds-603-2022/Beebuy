@@ -1,11 +1,20 @@
-from flask import Flask, render_template,send_from_directory
+from flask import Flask,  render_template
+from wtforms.fields import *
+from flask_wtf import FlaskForm, CSRFProtect
+from flask_bootstrap import Bootstrap4, SwitchField
+
 # import os
 
 # member_folder = os.path.join('static','member_folder')
 
 app = Flask(__name__)
+app.secret_key = 'dev'
 # app.config['mbr_folder'] = member_folder
+bootstrap = Bootstrap4(app)
+csrf = CSRFProtect(app)
 
+class SearchBar(FlaskForm):
+    search = SearchField()
 
 @app.route("/")
 def basic():
@@ -23,6 +32,11 @@ def following():
     member_list.append({'name':'Meilin Li','role':'Data Scientist','linkedin':'https://www.linkedin.com/in/li-meilin','profile':'/static/member_folder/meilin.png'})
     member_list.append({'name':'Jaysen Shi','role':'Data Engineer','linkedin':'https://www.linkedin.com/in/jaysenshi/','profile':'/static/member_folder/jaysen.png'})
     return render_template('about_page.html',member_list = member_list)
+
+@app.route("/test")
+def nav():
+    return render_template('test.html')
+
 
 if __name__=='__main__':
     app.run(host='0.0.0.0',debug = True)
