@@ -33,9 +33,6 @@ def following():
     member_list.append({'name':'Jaysen Shi','role':'Data Engineer','linkedin':'https://www.linkedin.com/in/jaysenshi/','profile':'/static/member_folder/jaysen.png'})
     return render_template('about_page.html',member_list = member_list)
 
-@app.route("/test")
-def nav():
-    return render_template('test.html')
 
 
 if __name__=='__main__':
