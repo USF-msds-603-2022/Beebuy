@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% from 'form.html' import render_form, render_field %}
+{% from 'utils.html' import render_messages %}
+
+
+
+{% block content %}
+{{ render_form(form, button_size='sm') }}
+{{ render_messages(container=False, dismissible=True) }}
+{% endblock content %}
+
+
+
+
