@@ -3,7 +3,7 @@ from wtforms.fields import *
 from flask_wtf import FlaskForm, CSRFProtect
 from flask_bootstrap import Bootstrap4, SwitchField
 from flask import Flask, render_template, request, flash, Markup, redirect, url_for
-from wtforms.validators import DataRequired, Length, Regexp
+from wtforms.validators import DataRequired, Length, Regexp,EqualTo
 from wtforms.fields import *
 # import os
 
@@ -14,16 +14,18 @@ app.secret_key = 'dev'
 # app.config['mbr_folder'] = member_folder
 bootstrap = Bootstrap4(app)
 csrf = CSRFProtect(app)
-
 class SearchBar(FlaskForm):
     search = SearchField()
+
 
 
 class Register(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(1, 20)])
     email = EmailField('Email')
-    password = PasswordField('Password', validators=[DataRequired(), Length(8, 150)])
-    confirmpassword = PasswordField('Confirm Password', validators=[DataRequired(), Length(8, 150)])
+    password = PasswordField('Password', validators=[DataRequired(), Length(8,150)])
+    confirmpassword = PasswordField('Confirm Password',validators=[DataRequired(), Length(8, 150),\
+        EqualTo('password', message='Passwords must match')])
+    accept_tos = BooleanField('I accept the Terms of Service and Privacy Notice', [DataRequired()])
     submit = SubmitField('Register')
 
 class Login(FlaskForm):
@@ -61,10 +63,7 @@ def following():
 @app.route('/register',methods=['GET', 'POST'])
 def register():
     form = Register()
-
     if form.validate_on_submit():
-        # if form.password()==form.confirmpassword():
-        # flash('Form validated!')
         return redirect(url_for('basic'))
     return render_template(
         'user.html',
@@ -76,12 +75,15 @@ def login():
     form = Login()
     if form.validate_on_submit():
         # flash('Form validated!')
-        return redirect(url_for('basic'))
+        return redirect(url_for('myAccount'))
     return render_template(
         'user.html',
-        form=form
+        form = form
     ) 
 
+@app.route('/myAccount')
+def myAccount():
+    return render_template('myaccount.html')
 
 if __name__=='__main__':
     app.run(host='0.0.0.0',debug = True)
