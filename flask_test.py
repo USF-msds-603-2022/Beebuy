@@ -92,7 +92,7 @@ def login():
 
 @app.route('/myAccount')
 def myAccount():
-    return render_template('myaccount.html')
+    return render_template('myaccount.html',items = items)
 
 if __name__=='__main__':
     app.run(host='0.0.0.0',debug = True)
