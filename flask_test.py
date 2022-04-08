@@ -48,7 +48,19 @@ class Login(FlaskForm):
 
 @app.route("/")
 def basic():
-    return render_template('main.html', items=items)
+    good_items = []
+    bad_items = []
+    for item in items:
+        # item_info = {}
+        # item_info['url'] = '/product/' + item['img_address'].strip('https://www.amazon.com/')
+        url = '/product/' + 'dp/' + item['img_address'].split('/dp/')[1].split('/ref=')[0]
+
+        if item['score'] > 6:
+            good_items.append((item, url))
+        if item['score'] <= 6:
+            bad_items.append((item, url))
+    return render_template('main.html', good_items=good_items, bad_items=bad_items)
+    # return render_template('main.html', items=items)
     
 @app.route("/suggestion")
 def suggest():
@@ -91,13 +103,15 @@ def login():
         form = form
     ) 
 
-@app.route("/product")
-def product():
+@app.route("/product/<website_special>/<product_code>")
+def product(website_special, product_code):
+    original_url = 'https://www.amazon.com/' + website_special + '/' + product_code
+
     product_img_url = "https://ca-times.brightspotcdn.com/dims4/default/9b1c273/2147483647/strip/true/crop/3000x2000+0+0/resize/840x560!/format/webp/quality/90/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Fe3%2Fef%2F1473571143efbd8cd764a95352d8%2F927753-me-0308-gas-2-rcg.jpg"
     price_history = "https://cdn.forumcomm.com/dims4/default/a314711/2147483647/strip/true/crop/670x325+0+0/resize/1680x814!/format/webp/quality/90/?url=https%3A%2F%2Fforum-communications-production-web.s3.amazonaws.com%2Fbrightspot%2F51%2F8c%2F9bab38594800892f770e8350a078%2Fgas-prices-chart.gif"
     radar_chart = "https://miro.medium.com/max/1400/1*YFroPGj9dpPx7nqf045AUQ.png"
 
-    return render_template('product.html', product_img_url = product_img_url, price_history= price_history, radar_chart = radar_chart)
+    return render_template('product.html', original_url = original_url, product_img_url = product_img_url, price_history= price_history, radar_chart = radar_chart)
 
 @app.route('/myAccount')
 def myAccount():
