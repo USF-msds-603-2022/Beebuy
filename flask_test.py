@@ -14,6 +14,16 @@ app.secret_key = 'dev'
 # app.config['mbr_folder'] = member_folder
 bootstrap = Bootstrap4(app)
 csrf = CSRFProtect(app)
+
+# database input
+items = []
+items.append({'name':'Samsung','score':9,'img_address':'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6452/6452997_sd.jpg;maxHeight=640;maxWidth=550','img':'/static/item_folder/samsung.png'})
+items.append({'name':'Sony','score':8.6,'img_address':'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6453/6453619_sd.jpg;maxHeight=640;maxWidth=550','img':'/static/item_folder/sony.png'})
+items.append({'name':'Lg','score':9.6,'img_address':'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6458/6458623_sd.jpg;maxHeight=640;maxWidth=550','profile':'/static/item_folder/lg.png'})
+items.append({'name':'TCL','score':5.5,'img_address':'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6470/6470251_sd.jpg;maxHeight=640;maxWidth=550','img':'/static/item_folder/tcl.png'})
+items.append({'name':'Insignia','score':4.6,'img_address':'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6456/6456970_sd.jpg;maxHeight=640;maxWidth=550','img':'/static/item_folder/insignia.png'})
+items.append({'name':'VIZIO','score':6.0,'img_address':'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6459/6459559_sd.jpg;maxHeight=640;maxWidth=550','profile':'/static/item_folder/vizio.png'})
+
 class SearchBar(FlaskForm):
     search = SearchField()
 
@@ -37,16 +47,15 @@ class Login(FlaskForm):
 
 @app.route("/")
 def basic():
-    suggestion = []
-    top10 = []
-    suggestion.append({'name':'Samsung','img_address':'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6452/6452997_sd.jpg;maxHeight=640;maxWidth=550','img':'/static/item_folder/samsung.png'})
-    suggestion.append({'name':'Sony','img_address':'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6453/6453619_sd.jpg;maxHeight=640;maxWidth=550','img':'/static/item_folder/sony.png'})
-    suggestion.append({'name':'Lg','img_address':'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6458/6458623_sd.jpg;maxHeight=640;maxWidth=550','profile':'/static/item_folder/lg.png'})
-    top10.append({'name':'TCL','img_address':'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6470/6470251_sd.jpg;maxHeight=640;maxWidth=550','img':'/static/item_folder/tcl.png'})
-    top10.append({'name':'Insignia','img_address':'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6456/6456970_sd.jpg;maxHeight=640;maxWidth=550','img':'/static/item_folder/insignia.png'})
-    top10.append({'name':'VIZIO','img_address':'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6459/6459559_sd.jpg;maxHeight=640;maxWidth=550','profile':'/static/item_folder/vizio.png'})
-    return render_template('main.html',suggestion = suggestion, top10=top10)
+    return render_template('main.html', items=items)
     
+@app.route("/suggestion")
+def suggest():
+    return render_template('suggestion.html', items=items)
+    
+@app.route("/dontbuy")
+def dontbuy():
+    return render_template('dontbuy.html', items=items)
 
 @app.route("/about")
 def following():
