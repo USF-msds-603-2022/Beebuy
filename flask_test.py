@@ -96,8 +96,7 @@ def product():
     price_history = "https://cdn.forumcomm.com/dims4/default/a314711/2147483647/strip/true/crop/670x325+0+0/resize/1680x814!/format/webp/quality/90/?url=https%3A%2F%2Fforum-communications-production-web.s3.amazonaws.com%2Fbrightspot%2F51%2F8c%2F9bab38594800892f770e8350a078%2Fgas-prices-chart.gif"
     radar_chart = "https://miro.medium.com/max/1400/1*YFroPGj9dpPx7nqf045AUQ.png"
 
-    return render_template('product.html', product_img_url = product_img_url, price_history= price_history,
-                           radar_chart = radar_chart)
+    return render_template('product.html', product_img_url = product_img_url, price_history= price_history, radar_chart = radar_chart)
 
 if __name__=='__main__':
     app.run(host='0.0.0.0',debug = True)
