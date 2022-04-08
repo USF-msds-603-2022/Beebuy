@@ -8,33 +8,33 @@
         <h1 class="mt-4">Product Name (Get from original website)</h1>
         <div class="container">
             <div class="row ">
-                {%for j in top10%}    
-                    <div class="col-lg-4 col-md-12">
-                        <img src="{{j['img_address']}}" width="150", height="100" class="rounded float-left" alt="...">
-                    </div>
-                {%endfor%}
+                <div class="col-lg-4 col-md-12">
+                    <img src="{{product_img_url}}" width="500" height="auto" class="rounded float-left" alt="...">
+                </div>
             </div>
         </div>
+
+
         <h2 class="mt-4">Price History</h2>
         <div class="container">
             <div class="row ">
-                {%for j in suggestion%}    
                 <div class="col-lg-4 col-md-12">
-                    <img src="{{j['img_address']}}" width="150", height="100" class="rounded float-left" alt="...">
+                    <img src="{{price_history}}" width="800" height="auto" class="rounded float-left" alt="...">
                 </div>
-                {%endfor%}
             </div>
         </div>
-        <h2 class="mt-4">Traits (hexagon graph here)</h2>
+
+
+        <h2 class="mt-4">Traits (radar chart here)</h2>
         <div class="container">
             <div class="row ">
-                {%for j in suggestion%}
                 <div class="col-lg-4 col-md-12">
-                    <img src="{{j['img_address']}}" width="150", height="100" class="rounded float-left" alt="...">
+                    <img src="{{radar_chart}}" width="400" height="auto" class="rounded float-left" alt="...">
                 </div>
-                {%endfor%}
             </div>
         </div>
+
+
         <h2 class="mt-4">Pros and Cons</h2>
         <div class="container">
             <div class="row ">
@@ -45,14 +45,14 @@
                 {%endfor%}
             </div>
         </div>
+
+
         <h2 class="mt-4">Add Your Review Here</h2>
         <div class="container">
-            <div class="row ">
-                {%for j in suggestion%}
-                <div class="col-lg-4 col-md-12">
-                    <img src="{{j['img_address']}}" width="150", height="100" class="rounded float-left" alt="...">
-                </div>
-                {%endfor%}
+            <div class="input-group rounded">
+            <input type="Type your review here" class="form-control rounded" placeholder="Type your review here" aria-label="Search" aria-describedby="search-addon" />
+            <button type="button" class="btn btn-outline-primary">Submit</button>
+
             </div>
         </div>
         </p>
