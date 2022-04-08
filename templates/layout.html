@@ -15,12 +15,12 @@
         <div class="d-flex" id="wrapper">
             <!-- Sidebar-->
             <div class="border-end bg-white" id="sidebar-wrapper">
-                <div class="sidebar-heading border-bottom bg-light" ><a href={{ url_for('basic') }} style = "color: #212529; text-decoration: none;">Don't Buy It</a></div>
+                <div class="sidebar-heading border-bottom bg-light" ><a href={{url_for('basic')}} style = "color: #212529; text-decoration: none;">Don't Buy It</a></div>
                 <div class="list-group list-group-flush">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href={{ url_for('basic') }}>Home</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="dontbuy">Don't Buy</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="suggestion">Suggested</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="about">About Us</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href={{url_for('basic')}}>Home</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href={{url_for('dontbuy')}}>Don't Buy</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href={{url_for('suggest')}}>Suggested</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href={{url_for('following')}}>About Us</a>
                 </div>
             </div>
             <!-- Page content wrapper-->
@@ -31,7 +31,7 @@
 
                         <div class="input-group rounded">
                         <input type="Search" class="form-control rounded" placeholder="Paste Product Link Here" aria-label="Search" aria-describedby="search-addon" />
-                        <a href="product/dp/B007M0I850">
+                        <a href={{url_for('evaluate')}}>
                             <button type="button" class="btn btn-outline-primary">Evaluate This Product</button>
                         </a>
                         </div>
