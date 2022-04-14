@@ -93,16 +93,16 @@ class LoginTime(db.Model):
 db.create_all()
 db.session.commit()
 
-# class RegistrationForm(FlaskForm):
-#     username = StringField('Username:', validators=[DataRequired()])
-#     email = StringField('Email:', validators=[DataRequired()])
-#     password = PasswordField('Password:', validators=[DataRequired()])
-#     submit = SubmitField('Submit')
+class RegistrationForm(FlaskForm):
+    username = StringField('Username:', validators=[DataRequired()])
+    email = StringField('Email:', validators=[DataRequired()])
+    password = PasswordField('Password:', validators=[DataRequired()])
+    submit = SubmitField('Submit')
 
-# class LogInForm(FlaskForm):
-#     username = StringField('Username:', validators=[DataRequired()])
-#     password = PasswordField('Password:', validators=[DataRequired()])
-#     submit = SubmitField('Login')
+class LogInForm(FlaskForm):
+    username = StringField('Username:', validators=[DataRequired()])
+    password = PasswordField('Password:', validators=[DataRequired()])
+    submit = SubmitField('Login')
 
 
 
