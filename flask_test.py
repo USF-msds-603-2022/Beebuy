@@ -1,3 +1,4 @@
+from xml.dom.pulldom import IGNORABLE_WHITESPACE
 from flask import Flask,  render_template
 from wtforms.fields import *
 from flask_wtf import FlaskForm, CSRFProtect
@@ -45,22 +46,17 @@ class Login(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired(), Length(8, 150)])
     submit = SubmitField('submit')
 
-
 @app.route("/")
 def basic():
     good_items = []
     bad_items = []
     for item in items:
-        # item_info = {}
-        # item_info['url'] = '/product/' + item['img_address'].strip('https://www.amazon.com/')
         url = '/product/' + 'dp/' + item['img_address'].split('/dp/')[1].split('/ref=')[0]
-
         if item['score'] > 6:
             good_items.append((item, url))
         if item['score'] <= 6:
             bad_items.append((item, url))
     return render_template('main.html', good_items=good_items, bad_items=bad_items)
-    # return render_template('main.html', items=items)
     
 @app.route("/suggestion")
 def suggest():
@@ -127,7 +123,12 @@ def product(website_special = 'dp', product_code = 'B085WTYQ4X'):
 
 @app.route('/myAccount')
 def myAccount():
-    return render_template('myaccount.html',items = items)
+    view_history = []
+    for item in items:
+        url = '/product/' + 'dp/' + item['img_address'].split('/dp/')[1].split('/ref=')[0]
+        if item['score'] >= 8.5:
+            view_history.append((item, url))
+    return render_template('myaccount.html', view_history = view_history)
 
 if __name__=='__main__':
     app.run(host='0.0.0.0',debug = True)
