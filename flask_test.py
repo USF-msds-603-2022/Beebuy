@@ -93,16 +93,16 @@ class LoginTime(db.Model):
 db.create_all()
 db.session.commit()
 
-class RegistrationForm(FlaskForm):
-    username = StringField('Username:', validators=[DataRequired()])
-    email = StringField('Email:', validators=[DataRequired()])
-    password = PasswordField('Password:', validators=[DataRequired()])
-    submit = SubmitField('Submit')
+# class RegistrationForm(FlaskForm):
+#     username = StringField('Username:', validators=[DataRequired()])
+#     email = StringField('Email:', validators=[DataRequired()])
+#     password = PasswordField('Password:', validators=[DataRequired()])
+#     submit = SubmitField('Submit')
 
-class LogInForm(FlaskForm):
-    username = StringField('Username:', validators=[DataRequired()])
-    password = PasswordField('Password:', validators=[DataRequired()])
-    submit = SubmitField('Login')
+# class LogInForm(FlaskForm):
+#     username = StringField('Username:', validators=[DataRequired()])
+#     password = PasswordField('Password:', validators=[DataRequired()])
+#     submit = SubmitField('Login')
 
 
 
@@ -220,12 +220,12 @@ def login():
         password = login_form.password.data
         # Look for it in the database.
         user = User.query.filter_by(username=username).first()
-
         # Login and validate the user.
         if user is not None and user.check_password(password):
             login_user(user)
             return redirect(url_for('basic'))
         else:
+            print (user,password)
             flash('Invalid username and password combination!')
     return render_template('user.html', form=login_form)
 
@@ -240,7 +240,8 @@ def logout():
 
     after_logout = '<h1> After logout - is_autheticated : ' \
                    + str(current_user.is_authenticated) + '</h1>'
-    return before_logout + after_logout
+    return redirect(url_for('basic'))
+    # return before_logout + after_logout
 
 
 @app.route("/product/dp/B007M0I850")
@@ -265,6 +266,7 @@ def product(website_special = 'dp', product_code = 'B085WTYQ4X'):
     return render_template('product.html', product_name = product_name, original_url = original_url, product_img_url = product_img_url, price_history= price_history, radar_chart = radar_chart)
 
 @app.route('/myAccount')
+@login_required
 def myAccount():
     return render_template('myaccount.html',items = items)
 
