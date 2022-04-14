@@ -154,12 +154,12 @@ def login():
         password = login_form.password.data
         # Look for it in the database.
         user = User.query.filter_by(username=username).first()
-
         # Login and validate the user.
         if user is not None and user.check_password(password):
             login_user(user)
             return redirect(url_for('basic'))
         else:
+            print (user,password)
             flash('Invalid username and password combination!')
     return render_template('user.html', form=login_form)
 
@@ -199,6 +199,7 @@ def product(website_special = 'dp', product_code = 'B085WTYQ4X'):
     return render_template('product.html', product_name = product_name, original_url = original_url, product_img_url = product_img_url, price_history= price_history, radar_chart = radar_chart)
 
 @app.route('/myAccount')
+@login_required
 def myAccount():
     view_history = []
     for item in items:
