@@ -1,13 +1,14 @@
-from xml.dom.pulldom import IGNORABLE_WHITESPACE
-from flask import Flask, render_template, request, flash, Markup, redirect, url_for, send_from_directory
+from flask import Flask,  render_template,send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from wtforms.fields import *
-from werkzeug.security import check_password_hash, generate_password_hash
-from flask_login import LoginManager
+from werkzeug.security import check_password_hash
+from flask_login import LoginManager, UserMixin
 from flask_wtf import FlaskForm, CSRFProtect
 from flask_bootstrap import Bootstrap4, SwitchField
+from flask import Flask, render_template, request, flash, Markup, redirect, url_for
 from wtforms.validators import DataRequired, Length, Regexp,EqualTo
 from wtforms.fields import *
+from werkzeug.security import generate_password_hash
 import os
 from flask_login import current_user, login_user, login_required, logout_user
 import time
@@ -53,17 +54,82 @@ class Login(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired(), Length(8, 150)])
     submit = SubmitField('submit')
 
+
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(80), unique=True, nullable=False)
+    password_hash = db.Column(db.String(120), nullable=False)
+
+    def __init__(self, username, email, password):
+        self.username = username
+        self.email = email
+        self.set_password(password)
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+class RegisterTime(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    register_time = db.Column(db.Integer) ## Epoch Time
+    username = db.Column(db.String(80), db.ForeignKey(User.username)) ## User who registered
+
+    def __init__(self, username):
+        self.username = username
+        self.register_time = time.time()
+
+class LoginTime(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    login_time = db.Column(db.Integer) ## Epoch Time
+    username = db.Column(db.String(80), db.ForeignKey(User.username)) ## User who registered
+
+    def __init__(self, username):
+        self.username = username
+        self.login_time = time.time()
+
+db.create_all()
+db.session.commit()
+
+class RegistrationForm(FlaskForm):
+    username = StringField('Username:', validators=[DataRequired()])
+    email = StringField('Email:', validators=[DataRequired()])
+    password = PasswordField('Password:', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+class LogInForm(FlaskForm):
+    username = StringField('Username:', validators=[DataRequired()])
+    password = PasswordField('Password:', validators=[DataRequired()])
+    submit = SubmitField('Login')
+
+
+
+@app.route("/favicon.ico")
+def favicon():
+    """
+    Open and return a 16x16 or 32x32 .png or other image file in binary mode.
+    This is the icon shown in the browser tab next to the title.
+    """
+    return send_from_directory(os.path.join(app.root_path, 'static'), 
+                            'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 @app.route("/")
 def basic():
     good_items = []
     bad_items = []
     for item in items:
+        # item_info = {}
+        # item_info['url'] = '/product/' + item['img_address'].strip('https://www.amazon.com/')
         url = '/product/' + 'dp/' + item['img_address'].split('/dp/')[1].split('/ref=')[0]
+
         if item['score'] > 6:
             good_items.append((item, url))
         if item['score'] <= 6:
             bad_items.append((item, url))
     return render_template('main.html', good_items=good_items, bad_items=bad_items)
+    # return render_template('main.html', items=items)
     
 @app.route("/suggestion")
 def suggest():
@@ -126,7 +192,7 @@ def register():
         email = registration_form.email.data
 
         user_count = User.query.filter_by(username=username).count() \
-                    + User.query.filter_by(email=email).count()
+                     + User.query.filter_by(email=email).count()
 
         if(user_count > 0):
             flash('Error - Existing user : ' + username + ' OR ' + email)            
@@ -173,7 +239,7 @@ def logout():
     logout_user()
 
     after_logout = '<h1> After logout - is_autheticated : ' \
-                + str(current_user.is_authenticated) + '</h1>'
+                   + str(current_user.is_authenticated) + '</h1>'
     return before_logout + after_logout
 
 
@@ -201,12 +267,7 @@ def product(website_special = 'dp', product_code = 'B085WTYQ4X'):
 @app.route('/myAccount')
 @login_required
 def myAccount():
-    view_history = []
-    for item in items:
-        url = '/product/' + 'dp/' + item['img_address'].split('/dp/')[1].split('/ref=')[0]
-        if item['score'] >= 8.5:
-            view_history.append((item, url))
-    return render_template('myaccount.html', view_history = view_history)
+    return render_template('myaccount.html',items = items)
 
 if __name__=='__main__':
     app.run(host='0.0.0.0',debug = True)
