@@ -1,19 +1,13 @@
-<<<<<<< HEAD
 from xml.dom.pulldom import IGNORABLE_WHITESPACE
-from flask import Flask,  render_template
-=======
-from flask import Flask,  render_template,send_from_directory
+from flask import Flask, render_template, request, flash, Markup, redirect, url_for, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
->>>>>>> 89c3dd9ceaeb4dead0288f0b276fdc499197a4f6
 from wtforms.fields import *
-from werkzeug.security import check_password_hash
-from flask_login import LoginManager, UserMixin
+from werkzeug.security import check_password_hash, generate_password_hash
+from flask_login import LoginManager
 from flask_wtf import FlaskForm, CSRFProtect
 from flask_bootstrap import Bootstrap4, SwitchField
-from flask import Flask, render_template, request, flash, Markup, redirect, url_for
 from wtforms.validators import DataRequired, Length, Regexp,EqualTo
 from wtforms.fields import *
-from werkzeug.security import generate_password_hash
 import os
 from flask_login import current_user, login_user, login_required, logout_user
 import time
@@ -59,70 +53,6 @@ class Login(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired(), Length(8, 150)])
     submit = SubmitField('submit')
 
-<<<<<<< HEAD
-=======
-
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(80), unique=True, nullable=False)
-    password_hash = db.Column(db.String(120), nullable=False)
-
-    def __init__(self, username, email, password):
-        self.username = username
-        self.email = email
-        self.set_password(password)
-
-    def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
-
-    def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
-
-class RegisterTime(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    register_time = db.Column(db.Integer) ## Epoch Time
-    username = db.Column(db.String(80), db.ForeignKey(User.username)) ## User who registered
-
-    def __init__(self, username):
-        self.username = username
-        self.register_time = time.time()
-
-class LoginTime(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    login_time = db.Column(db.Integer) ## Epoch Time
-    username = db.Column(db.String(80), db.ForeignKey(User.username)) ## User who registered
-
-    def __init__(self, username):
-        self.username = username
-        self.login_time = time.time()
-
-db.create_all()
-db.session.commit()
-
-class RegistrationForm(FlaskForm):
-    username = StringField('Username:', validators=[DataRequired()])
-    email = StringField('Email:', validators=[DataRequired()])
-    password = PasswordField('Password:', validators=[DataRequired()])
-    submit = SubmitField('Submit')
-
-class LogInForm(FlaskForm):
-    username = StringField('Username:', validators=[DataRequired()])
-    password = PasswordField('Password:', validators=[DataRequired()])
-    submit = SubmitField('Login')
-
-
-
-@app.route("/favicon.ico")
-def favicon():
-    """
-    Open and return a 16x16 or 32x32 .png or other image file in binary mode.
-    This is the icon shown in the browser tab next to the title.
-    """
-    return send_from_directory(os.path.join(app.root_path, 'static'), 
-                            'favicon.ico', mimetype='image/vnd.microsoft.icon')
-
->>>>>>> 89c3dd9ceaeb4dead0288f0b276fdc499197a4f6
 @app.route("/")
 def basic():
     good_items = []
@@ -196,7 +126,7 @@ def register():
         email = registration_form.email.data
 
         user_count = User.query.filter_by(username=username).count() \
-                     + User.query.filter_by(email=email).count()
+                    + User.query.filter_by(email=email).count()
 
         if(user_count > 0):
             flash('Error - Existing user : ' + username + ' OR ' + email)            
@@ -243,7 +173,7 @@ def logout():
     logout_user()
 
     after_logout = '<h1> After logout - is_autheticated : ' \
-                   + str(current_user.is_authenticated) + '</h1>'
+                + str(current_user.is_authenticated) + '</h1>'
     return before_logout + after_logout
 
 
