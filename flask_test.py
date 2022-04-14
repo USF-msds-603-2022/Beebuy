@@ -1,13 +1,22 @@
+<<<<<<< HEAD
 from xml.dom.pulldom import IGNORABLE_WHITESPACE
 from flask import Flask,  render_template
+=======
+from flask import Flask,  render_template,send_from_directory
+from flask_sqlalchemy import SQLAlchemy
+>>>>>>> 89c3dd9ceaeb4dead0288f0b276fdc499197a4f6
 from wtforms.fields import *
+from werkzeug.security import check_password_hash
+from flask_login import LoginManager, UserMixin
 from flask_wtf import FlaskForm, CSRFProtect
 from flask_bootstrap import Bootstrap4, SwitchField
 from flask import Flask, render_template, request, flash, Markup, redirect, url_for
 from wtforms.validators import DataRequired, Length, Regexp,EqualTo
 from wtforms.fields import *
-# import os
-
+from werkzeug.security import generate_password_hash
+import os
+from flask_login import current_user, login_user, login_required, logout_user
+import time
 # member_folder = os.path.join('static','member_folder')
 
 app = Flask(__name__)
@@ -15,6 +24,10 @@ app.secret_key = 'dev'
 # app.config['mbr_folder'] = member_folder
 bootstrap = Bootstrap4(app)
 csrf = CSRFProtect(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+db = SQLAlchemy(app)
 
 # database input
 items = []
@@ -46,6 +59,70 @@ class Login(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired(), Length(8, 150)])
     submit = SubmitField('submit')
 
+<<<<<<< HEAD
+=======
+
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(80), unique=True, nullable=False)
+    password_hash = db.Column(db.String(120), nullable=False)
+
+    def __init__(self, username, email, password):
+        self.username = username
+        self.email = email
+        self.set_password(password)
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+class RegisterTime(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    register_time = db.Column(db.Integer) ## Epoch Time
+    username = db.Column(db.String(80), db.ForeignKey(User.username)) ## User who registered
+
+    def __init__(self, username):
+        self.username = username
+        self.register_time = time.time()
+
+class LoginTime(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    login_time = db.Column(db.Integer) ## Epoch Time
+    username = db.Column(db.String(80), db.ForeignKey(User.username)) ## User who registered
+
+    def __init__(self, username):
+        self.username = username
+        self.login_time = time.time()
+
+db.create_all()
+db.session.commit()
+
+class RegistrationForm(FlaskForm):
+    username = StringField('Username:', validators=[DataRequired()])
+    email = StringField('Email:', validators=[DataRequired()])
+    password = PasswordField('Password:', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+class LogInForm(FlaskForm):
+    username = StringField('Username:', validators=[DataRequired()])
+    password = PasswordField('Password:', validators=[DataRequired()])
+    submit = SubmitField('Login')
+
+
+
+@app.route("/favicon.ico")
+def favicon():
+    """
+    Open and return a 16x16 or 32x32 .png or other image file in binary mode.
+    This is the icon shown in the browser tab next to the title.
+    """
+    return send_from_directory(os.path.join(app.root_path, 'static'), 
+                            'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+>>>>>>> 89c3dd9ceaeb4dead0288f0b276fdc499197a4f6
 @app.route("/")
 def basic():
     good_items = []
@@ -78,26 +155,96 @@ def following():
     member_list.append({'name':'Jaysen Shi','role':'Data Engineer','linkedin':'https://www.linkedin.com/in/jaysenshi/','profile':'/static/member_folder/jaysen.png'})
     return render_template('about_page.html',member_list = member_list)
 
-@app.route('/register',methods=['GET', 'POST'])
-def register():
-    form = Register()
-    if form.validate_on_submit():
-        return redirect(url_for('basic'))
-    return render_template(
-        'user.html',
-        form=form
-    ) 
+# @app.route('/register',methods=['GET', 'POST'])
+# def register():
+#     form = Register()
+#     if form.validate_on_submit():
+#         return redirect(url_for('basic'))
+#     return render_template(
+#         'user.html',
+#         form=form
+#     ) 
 
-@app.route('/login',methods=['GET', 'POST'])
+# @app.route('/login',methods=['GET', 'POST'])
+# def login():
+#     form = Login()
+#     if form.validate_on_submit():
+#         # flash('Form validated!')
+#         return redirect(url_for('myAccount'))
+#     return render_template(
+#         'user.html',
+#         form = form
+#     ) 
+
+
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(int(id))
+
+# @app.route('/index')
+# @app.route('/')
+# def index():
+#     return render_template('index.html', authenticated_user=current_user.is_authenticated)
+
+@app.route('/register',  methods=('GET', 'POST'))
+def register():
+    # https://flask.palletsprojects.com/en/2.1.x/patterns/wtforms/
+    registration_form = Register()
+    if registration_form.validate_on_submit():
+        username = registration_form.username.data
+        password = registration_form.password.data
+        email = registration_form.email.data
+
+        user_count = User.query.filter_by(username=username).count() \
+                     + User.query.filter_by(email=email).count()
+
+        if(user_count > 0):
+            flash('Error - Existing user : ' + username + ' OR ' + email)            
+        else:
+            user = User(username, email, password)
+            rt = RegisterTime(username)
+            db.session.add(user)
+            db.session.add(rt)
+            db.session.commit()
+            flash('Thanks for registering!')
+            return redirect(url_for('login'))
+    return render_template('user.html',form=registration_form)
+
+@app.route('/exam', methods=['GET', 'POST'])
+@login_required
+def examples():
+    return render_template('examples.html', authenticated_user=current_user.is_authenticated,)
+
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = Login()
-    if form.validate_on_submit():
-        # flash('Form validated!')
-        return redirect(url_for('myAccount'))
-    return render_template(
-        'user.html',
-        form = form
-    ) 
+    login_form = Login()
+    if login_form.validate_on_submit():
+        username = login_form.username.data
+        password = login_form.password.data
+        # Look for it in the database.
+        user = User.query.filter_by(username=username).first()
+
+        # Login and validate the user.
+        if user is not None and user.check_password(password):
+            login_user(user)
+            return redirect(url_for('basic'))
+        else:
+            flash('Invalid username and password combination!')
+    return render_template('user.html', form=login_form)
+
+@app.route('/logout')
+@login_required
+def logout():
+
+    before_logout = '<h1> Before logout - is_autheticated : ' \
+                    + str(current_user.is_authenticated) + '</h1>'
+
+    logout_user()
+
+    after_logout = '<h1> After logout - is_autheticated : ' \
+                   + str(current_user.is_authenticated) + '</h1>'
+    return before_logout + after_logout
 
 
 @app.route("/product/dp/B007M0I850")
