@@ -5,14 +5,12 @@
 Chris<br><br><br><br><br><br><br><br>
 <h2>View History</h2>
 <div class="row ">
-{%for j in items%}    
-    {% if j['score'] > 6.0%}  
-        <div class="col-lg-4 col-md-12">
-            <a href="/product"> 
-            <img src="{{j['img']}}" width="150", height="100" class="rounded float-left" alt="...">
-            </a>
-        </div>
-    {% endif %}
+{%for j in view_history%}    
+    <div class="col-lg-4 col-md-12">
+        <a href="{{j[1]}}"> 
+        <img src="{{j[0]['img']}}" width="150", height="100" class="rounded float-left" alt="...">
+        </a>
+    </div>
 {%endfor%}
 </div>
 {% endblock %}
