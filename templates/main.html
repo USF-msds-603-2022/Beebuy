@@ -11,7 +11,7 @@
                 <a href="dontbuy" class="btn btn-lg pull-right" role="button"><u>more</u></a>
             </div>
             <div class="row ">
-                {%for j in good_items%}
+                {%for j in bad_items%}
                     <div class="col-lg-4 col-md-12">
                         <a href="{{j[1]}}">
                         <img src="{{j[0]['img']}}" width="150", height="100" class="rounded float-left" alt="...">
@@ -26,7 +26,7 @@
                 <a href="suggestion" class="btn btn-lg float-right" role="button"><u>more</u></a>
             </div>
             <div class="row ">
-                {%for j in bad_items%}
+                {%for j in good_items%}
                     <div class="col-lg-4 col-md-12">
                         <a href="{{j[1]}}">
                         <img src="{{j[0]['img']}}" width="150", height="100" class="rounded float-left" alt="...">

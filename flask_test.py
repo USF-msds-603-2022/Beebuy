@@ -26,12 +26,24 @@ db = SQLAlchemy(app)
 
 # database input
 items = []
-items.append({'name':'Samsung','code':'B08V37JHSQ','score':9,'img_address':'https://www.amazon.com/SAMSUNG-85-Inch-Class-QN85A-Built/dp/B08V37JHSQ/ref=sr_1_1_sspa?crid=3ADPK2WZ7TB3L&keywords=Samsung+tv&qid=1649383624&sprefix=samsung+tv%2Caps%2C282&sr=8-1-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUExV0tJSFJGSFpBVk9NJmVuY3J5cHRlZElkPUEwMDM4NjE2MVJPVUNNV1cyWDZTOSZlbmNyeXB0ZWRBZElkPUExMDA4MTc5WjRPTTRVRTlNRUJJJndpZGdldE5hbWU9c3BfYXRmJmFjdGlvbj1jbGlja1JlZGlyZWN0JmRvTm90TG9nQ2xpY2s9dHJ1ZQ==','img':'https://m.media-amazon.com/images/I/816z9yHvl4L._AC_SL1500_.jpg'})
-items.append({'name':'Sony','code':'B08WJMQ5TG','score':8.6,'img_address':'https://www.amazon.com/Sony-X85J-Inch-Compatibility-KD50X85J/dp/B08WJMQ5TG/ref=sr_1_3?crid=FIRWCM4EUP5H&keywords=Sony%2Btv&qid=1649383693&sprefix=sony%2Btv%2Caps%2C189&sr=8-3&th=1','img':'https://m.media-amazon.com/images/I/81gvQXs0CML._AC_SL1500_.jpg'})
-items.append({'name':'Lg','code':'B098KMQFLR','score':9.6,'img_address':'https://www.amazon.com/LG-43UP8000PUR-Alexa-Built-Smart/dp/B098KMQFLR/ref=sr_1_3_mod_primary_new?crid=OEVWA5JY2SKA&keywords=lg%2Btv&qid=1649383736&sbo=RZvfv%2F%2FHxDF%2BO5021pAnSA%3D%3D&sprefix=lg%2Btv%2Caps%2C297&sr=8-3&th=1','img':'https://m.media-amazon.com/images/I/A1x+r1Swa+S._AC_SL1500_.jpg'})
-items.append({'name':'TCL','code':'B0885N17CC','score':5.5,'img_address':'https://www.amazon.com/dp/B0885N17CC/ref=redir_mobile_desktop?_encoding=UTF8&aaxitk=587b1f6935a5002f9dbc01c05b389cb1&hsa_cr_id=3832062660101&pd_rd_plhdr=t&pd_rd_r=be5bc822-fd56-40c2-a582-3080c52a2485&pd_rd_w=mCWpa&pd_rd_wg=WA2Su&ref_=sbx_be_s_sparkle_mcd_asin_0_img','img':'https://m.media-amazon.com/images/I/91CXxVtVkAL._AC_SL1500_.jpg'})
-items.append({'name':'Insignia','code':'B08Z265BJH','score':4.6,'img_address':'https://www.amazon.com/Insignia-50-inch-Class-Smart-Fire/dp/B08Z265BJH/ref=sr_1_2_sspa?crid=28YZLD7TWZ02U&keywords=tv&qid=1649382165&sprefix=t+v%2Caps%2C294&sr=8-2-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEzMkczNldSSzg5M01MJmVuY3J5cHRlZElkPUEwMTQyMjYwQjdWQTdMSDRZRENFJmVuY3J5cHRlZEFkSWQ9QTA2NDc5NTIxWUZFS1E5NkIyTFA0JndpZGdldE5hbWU9c3BfYXRmJmFjdGlvbj1jbGlja1JlZGlyZWN0JmRvTm90TG9nQ2xpY2s9dHJ1ZQ==','img':'https://m.media-amazon.com/images/I/81kRxFTpd1L._AC_SL1500_.jpg'})
-items.append({'name':'VIZIO','code':'B092Q8L5DV','score':6.0,'img_address':'https://www.amazon.com/VIZIO-65-Inch-AirPlay-Chromecast-V655-J09/dp/B092Q8L5DV/ref=sr_1_2?crid=1P4G301WOXA19&keywords=VIZIO+tv&qid=1649382210&sprefix=vizio+t+v%2Caps%2C282&sr=8-2','img':'https://m.media-amazon.com/images/I/81ii3VScCbL._AC_SL1500_.jpg'})
+items.append({'name':'Samsung','code':'B08V37JHSQ','score':9, 'critic_rating':95, 'user_rating':4.4, 'price_score': 'Good',
+              'img_address':'https://www.amazon.com/SAMSUNG-85-Inch-Class-QN85A-Built/dp/B08V37JHSQ/ref=sr_1_1_sspa?crid=3ADPK2WZ7TB3L&keywords=Samsung+tv&qid=1649383624&sprefix=samsung+tv%2Caps%2C282&sr=8-1-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUExV0tJSFJGSFpBVk9NJmVuY3J5cHRlZElkPUEwMDM4NjE2MVJPVUNNV1cyWDZTOSZlbmNyeXB0ZWRBZElkPUExMDA4MTc5WjRPTTRVRTlNRUJJJndpZGdldE5hbWU9c3BfYXRmJmFjdGlvbj1jbGlja1JlZGlyZWN0JmRvTm90TG9nQ2xpY2s9dHJ1ZQ==',
+              'img':'https://m.media-amazon.com/images/I/816z9yHvl4L._AC_SL1500_.jpg'})
+items.append({'name':'Sony','code':'B08WJMQ5TG','score':8.6, 'critic_rating':88, 'user_rating':4.1, 'price_score': 'Great',
+              'img_address':'https://www.amazon.com/Sony-X85J-Inch-Compatibility-KD50X85J/dp/B08WJMQ5TG/ref=sr_1_3?crid=FIRWCM4EUP5H&keywords=Sony%2Btv&qid=1649383693&sprefix=sony%2Btv%2Caps%2C189&sr=8-3&th=1',
+              'img':'https://m.media-amazon.com/images/I/81gvQXs0CML._AC_SL1500_.jpg'})
+items.append({'name':'Lg','code':'B098KMQFLR','score':9.6, 'critic_rating':92, 'user_rating':4.5, 'price_score': 'Great',
+              'img_address':'https://www.amazon.com/LG-43UP8000PUR-Alexa-Built-Smart/dp/B098KMQFLR/ref=sr_1_3_mod_primary_new?crid=OEVWA5JY2SKA&keywords=lg%2Btv&qid=1649383736&sbo=RZvfv%2F%2FHxDF%2BO5021pAnSA%3D%3D&sprefix=lg%2Btv%2Caps%2C297&sr=8-3&th=1',
+              'img':'https://m.media-amazon.com/images/I/A1x+r1Swa+S._AC_SL1500_.jpg'})
+items.append({'name':'TCL','code':'B0885N17CC','score':5.5, 'critic_rating':65, 'user_rating':4.1, 'price_score': 'Okay',
+              'img_address':'https://www.amazon.com/dp/B0885N17CC/ref=redir_mobile_desktop?_encoding=UTF8&aaxitk=587b1f6935a5002f9dbc01c05b389cb1&hsa_cr_id=3832062660101&pd_rd_plhdr=t&pd_rd_r=be5bc822-fd56-40c2-a582-3080c52a2485&pd_rd_w=mCWpa&pd_rd_wg=WA2Su&ref_=sbx_be_s_sparkle_mcd_asin_0_img',
+              'img':'https://m.media-amazon.com/images/I/91CXxVtVkAL._AC_SL1500_.jpg'})
+items.append({'name':'Insignia','code':'B08Z265BJH','score':4.6, 'critic_rating':91, 'user_rating':3.9, 'price_score': 'Good',
+              'img_address':'https://www.amazon.com/Insignia-50-inch-Class-Smart-Fire/dp/B08Z265BJH/ref=sr_1_2_sspa?crid=28YZLD7TWZ02U&keywords=tv&qid=1649382165&sprefix=t+v%2Caps%2C294&sr=8-2-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEzMkczNldSSzg5M01MJmVuY3J5cHRlZElkPUEwMTQyMjYwQjdWQTdMSDRZRENFJmVuY3J5cHRlZEFkSWQ9QTA2NDc5NTIxWUZFS1E5NkIyTFA0JndpZGdldE5hbWU9c3BfYXRmJmFjdGlvbj1jbGlja1JlZGlyZWN0JmRvTm90TG9nQ2xpY2s9dHJ1ZQ==',
+              'img':'https://m.media-amazon.com/images/I/81kRxFTpd1L._AC_SL1500_.jpg'})
+items.append({'name':'VIZIO','code':'B092Q8L5DV','score':6.0, 'critic_rating':67, 'user_rating':3.1, 'price_score': 'Poor',
+              'img_address':'https://www.amazon.com/VIZIO-65-Inch-AirPlay-Chromecast-V655-J09/dp/B092Q8L5DV/ref=sr_1_2?crid=1P4G301WOXA19&keywords=VIZIO+tv&qid=1649382210&sprefix=vizio+t+v%2Caps%2C282&sr=8-2',
+              'img':'https://m.media-amazon.com/images/I/81ii3VScCbL._AC_SL1500_.jpg'})
 # items.append({'name':'Toshiba','code':'B0924SX7P1','score':7.5,'img_address':'https://www.amazon.com/Toshiba-65-inch-4K-UHD-Smart-Fire-TV/dp/B0924SX7P1/ref=sr_1_5_sspa?gclid=EAIaIQobChMIjr_RrdyD9wIVxDizAB3DWA3WEAAYASAAEgIKBPD_BwE&hvadid=557209947814&hvdev=c&hvlocphy=1014221&hvnetw=g&hvqmt=b&hvrand=1267777265010267032&hvtargid=kwd-297505614716&hydadcr=20142_13296026&keywords=tv+at+amazon&qid=1649395315&sr=8-5-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUFEWk9MSzROQ1VKOUImZW5jcnlwdGVkSWQ9QTA1MDU0NTEyVERPRzBMNVdLNjlZJmVuY3J5cHRlZEFkSWQ9QTAxMTYwNjVWSTkxVkVaTTdTNTYmd2lkZ2V0TmFtZT1zcF9tdGYmYWN0aW9uPWNsaWNrUmVkaXJlY3QmZG9Ob3RMb2dDbGljaz10cnVl','img':'https://m.media-amazon.com/images/I/81QvlthwGRS._AC_SL1500_.jpg'})
 
 class SearchBar(FlaskForm):
@@ -242,27 +254,52 @@ def logout():
                    + str(current_user.is_authenticated) + '</h1>'
     return before_logout + after_logout
 
+############ This are hard-coded variables
+review_list = []
+review_list.append({'publisher':'CNET','abstract':'With a world-beating picture, oodles of features and slim styling, the LG C1 remains the TV to beat. ',
+                    'url':'https://www.cnet.com/reviews/lg-oled55c1pub-review/'})
+review_list.append({'publisher':'RTINGS','abstract':"As expected, it's an amazing TV, but aside from a few minor tweaks and upgrades—like the new 'Game Optimizer' settings, a redesigned Magic Remote, and a new version of webOS—it performs about the same as its predecessor. ",
+                    'url':'https://www.rtings.com/tv/reviews/lg/c1-oled'})
+review_list.append({'publisher':'TECHRADAR','abstract':'The C1 OLED is one of the best TVs we’ve seen in 2021, and a very good option for a cheaper OLED in 2022.',
+                    'url':'https://www.techradar.com/reviews/lg-c1-oled-tv-oled65c1'})
+review_list.append({'publisher':'IGN','abstract':"A gorgeous OLED, a great 4K smart TV, and the best gaming TV we've ever seen.",
+                    'url':'https://www.tomsguide.com/reviews/lg-c1-oled-tv'})
+review_list.append({'publisher':'TOMS GUIDE','abstract':'The LG C1 is what I would buy if I were in the market for a gaming television. It does everything right that matters and is packed to the gills with the hardware and software features.',
+                    'url':'https://www.ign.com/articles/lg-c1-review'})
 
-@app.route("/product/dp/B007M0I850")
+
+############
+
+
+@app.route("/product/dp/B08WFV7L3N")
 def evaluate():
-    original_url = 'https://www.amazon.com/' + 'dp/B007M0I850'
+    original_url = 'https://www.amazon.com/' + 'dp/B08WFV7L3N'
 
-    product_img_url = "https://ca-times.brightspotcdn.com/dims4/default/9b1c273/2147483647/strip/true/crop/3000x2000+0+0/resize/840x560!/format/webp/quality/90/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Fe3%2Fef%2F1473571143efbd8cd764a95352d8%2F927753-me-0308-gas-2-rcg.jpg"
-    price_history = "https://cdn.forumcomm.com/dims4/default/a314711/2147483647/strip/true/crop/670x325+0+0/resize/1680x814!/format/webp/quality/90/?url=https%3A%2F%2Fforum-communications-production-web.s3.amazonaws.com%2Fbrightspot%2F51%2F8c%2F9bab38594800892f770e8350a078%2Fgas-prices-chart.gif"
+    critic_rating = 85
+    user_rating = 4.2
+    price_score = 'Great'
+    product_name = "LG OLED C1 Series"
+    product_img_url = "/static/item_folder/lg_c1.jpeg"
+    price_history = '/static/item_folder/price_history.png'
     radar_chart = "https://miro.medium.com/max/1400/1*YFroPGj9dpPx7nqf045AUQ.png"
 
-    return render_template('product.html', original_url = original_url, product_img_url = product_img_url, price_history= price_history, radar_chart = radar_chart)
+    return render_template('product.html', critic_rating = critic_rating, user_rating = user_rating, price_score = price_score, review_list = review_list,
+                           product_name = product_name, original_url = original_url, product_img_url = product_img_url, price_history= price_history, radar_chart = radar_chart)
 
 @app.route("/product/<website_special>/<product_code>")
 def product(website_special = 'dp', product_code = 'B085WTYQ4X'):
     original_url = 'https://www.amazon.com/' + website_special + '/' + product_code
     for j in items:
         if j['code'] == product_code:
+            critic_rating = j['critic_rating']
+            user_rating = j['user_rating']
+            price_score = j['price_score']
             product_name = j['name']
             product_img_url = j['img']
-            price_history = "https://cdn.forumcomm.com/dims4/default/a314711/2147483647/strip/true/crop/670x325+0+0/resize/1680x814!/format/webp/quality/90/?url=https%3A%2F%2Fforum-communications-production-web.s3.amazonaws.com%2Fbrightspot%2F51%2F8c%2F9bab38594800892f770e8350a078%2Fgas-prices-chart.gif"
+            price_history = '/static/item_folder/price_history.png'
             radar_chart = "https://miro.medium.com/max/1400/1*YFroPGj9dpPx7nqf045AUQ.png"
-    return render_template('product.html', product_name = product_name, original_url = original_url, product_img_url = product_img_url, price_history= price_history, radar_chart = radar_chart)
+    return render_template('product.html', critic_rating = critic_rating, user_rating = user_rating, price_score = price_score, review_list = review_list,
+                           product_name = product_name, original_url = original_url, product_img_url = product_img_url, price_history= price_history, radar_chart = radar_chart)
 
 @app.route('/myAccount')
 @login_required

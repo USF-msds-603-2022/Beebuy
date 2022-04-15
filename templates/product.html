@@ -6,7 +6,10 @@
 
     <div class="container-fluid">
         <h1 class="mt-4">{{product_name}}</h1>
-        <h4 class="mt-4">Product Name (Get from the original website)(Click pic below goes to its original web)</h4>
+        <h4 class="mt-4">Critic Rating: {{critic_rating}}</h4>
+        <h4 class="mt-4">User Rating: {{user_rating}}</h4>
+        <h4 class="mt-4">Price Score: {{price_score}}</h4>
+<!--        <h4 class="mt-4">Product Name (Get from the original website)(Click pic below goes to its original web)</h4>-->
         <div class="container">
             <div class="row ">
                 <div class="col-lg-4 col-md-12">
@@ -49,6 +52,22 @@
             </div>
         </div>
 
+
+
+        <h2 class="mt-4">Critic Reviews</h2>
+        <div class="container">
+            <table>
+                {%for i in review_list%}
+                    <tr>
+                        <td style="font-family:Verdana, sans-serif">
+                            <b>{{i['publisher']}}</b><br>
+                            {{i['abstract']}} <br>
+                            <a href="{{i['url']}}">Read More</a>
+                        </td>
+                    </tr>
+                {%endfor%}
+                </table>
+        </div>
 
         <h2 class="mt-4">Add Your Review Here</h2>
         <div class="container">
