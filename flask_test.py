@@ -261,7 +261,6 @@ def logout():
     else:
         return render_template('error_page.html')
 
-@app.route("/product/dp/B007M0I850")
 ############ This are hard-coded variables
 review_list = []
 review_list.append({'publisher':'CNET','abstract':'With a world-beating picture, oodles of features and slim styling, the LG C1 remains the TV to beat. ',
