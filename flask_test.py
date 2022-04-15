@@ -12,6 +12,7 @@ from werkzeug.security import generate_password_hash
 import os
 from flask_login import current_user, login_user, login_required, logout_user
 import time
+# from django.contrib.auth.decorators import login_required
 # member_folder = os.path.join('static','member_folder')
 
 app = Flask(__name__)
@@ -52,7 +53,7 @@ class Login(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(1, 20)])
     email = EmailField('Email')
     password = PasswordField('Password', validators=[DataRequired(), Length(8, 150)])
-    submit = SubmitField('submit')
+    submit = SubmitField('login')
 
 
 class User(db.Model, UserMixin):
@@ -202,14 +203,14 @@ def register():
             db.session.add(user)
             db.session.add(rt)
             db.session.commit()
-            flash('Thanks for registering!')
+            # flash('Thanks for registering!')
             return redirect(url_for('login'))
     return render_template('user.html',form=registration_form)
 
-@app.route('/exam', methods=['GET', 'POST'])
-@login_required
-def examples():
-    return render_template('examples.html', authenticated_user=current_user.is_authenticated,)
+# @app.route('/exam', methods=['GET', 'POST'])
+# @login_required
+# def examples():
+#     return render_template('examples.html', authenticated_user=current_user.is_authenticated,)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -229,19 +230,24 @@ def login():
             flash('Invalid username and password combination!')
     return render_template('user.html', form=login_form)
 
+# @login_required(login_url='/example url you want redirect/') #redirect when user is not logged in
+# def myview(request):
+#     do something
+#     return something #returns when user is logged in
+
+# @app.after_request
+# def redirect_to_signin(response):
+#     if response.status_code == 401:
+#         return redirect('/login')
+
 @app.route('/logout')
-@login_required
+# @login_required
 def logout():
-
-    before_logout = '<h1> Before logout - is_autheticated : ' \
-                    + str(current_user.is_authenticated) + '</h1>'
-
-    logout_user()
-
-    after_logout = '<h1> After logout - is_autheticated : ' \
-                   + str(current_user.is_authenticated) + '</h1>'
-    return before_logout + after_logout
-
+    if current_user.is_authenticated:
+        logout_user()
+        return redirect(url_for('basic'))
+    else:
+        return render_template('error_page.html')
 
 @app.route("/product/dp/B007M0I850")
 def evaluate():
@@ -265,9 +271,15 @@ def product(website_special = 'dp', product_code = 'B085WTYQ4X'):
     return render_template('product.html', product_name = product_name, original_url = original_url, product_img_url = product_img_url, price_history= price_history, radar_chart = radar_chart)
 
 @app.route('/myAccount')
-@login_required
+# @login_required
 def myAccount():
-    return render_template('myaccount.html',items = items)
+    if current_user.is_authenticated:
+        return render_template('myaccount.html',items = items)
+    else:
+        # flash("Please login first")
+        return render_template('error_page.html')
+        # return redirect(url_for('login'))
+    
 
 if __name__=='__main__':
     app.run(host='0.0.0.0',debug = True)
