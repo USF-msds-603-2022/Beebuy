@@ -40,18 +40,55 @@
             </div>
         </div>
 
+        <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        * {
+          box-sizing: border-box;
+        }
 
-        <h2 class="mt-4">Pros and Cons</h2>
-        <div class="container">
-            <div class="row ">
-                {%for j in suggestion%}
-                <div class="col-lg-4 col-md-12">
-                    <img src="{{j['img_address']}}" width="150", height="100" class="rounded float-left" alt="...">
-                </div>
+        /* Create two equal columns that floats next to each other */
+        .column {
+          float: left;
+          width: 35%;
+          padding: 10px;
+          height: 150px; /* Should be removed. Only for demonstration */
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+          content: "";
+          display: table;
+          clear: both;
+        }
+        </style>
+        </head>
+        <body>
+
+        <div class="row">
+          <div class="column" style="background-color:#ffffff;">
+            <h2>Pros</h2>
+                {%for i in pros_list%}
+                    <tr>
+                        <td style="font-family:Verdana, sans-serif">
+                            {{i}}<br>
+                        </td>
+                    </tr>
                 {%endfor%}
-            </div>
+          </div>
+          <div class="column" style="background-color:#ffffff;">
+            <h2>Cons</h2>
+                {%for i in cons_list%}
+                    <tr>
+                        <td style="font-family:Verdana, sans-serif">
+                            {{i}}<br>
+                        </td>
+                    </tr>
+                {%endfor%}
+          </div>
         </div>
 
+        </body>
 
 
         <h2 class="mt-4">Critic Reviews</h2>

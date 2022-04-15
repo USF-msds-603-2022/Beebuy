@@ -266,8 +266,13 @@ review_list.append({'publisher':'IGN','abstract':"A gorgeous OLED, a great 4K sm
                     'url':'https://www.tomsguide.com/reviews/lg-c1-oled-tv'})
 review_list.append({'publisher':'TOMS GUIDE','abstract':'The LG C1 is what I would buy if I were in the market for a gaming television. It does everything right that matters and is packed to the gills with the hardware and software features.',
                     'url':'https://www.ign.com/articles/lg-c1-review'})
-
-
+pros_list = []
+pros_list.append('Near-infinite contrast ratio')
+pros_list.append('Wide viewing angles')
+pros_list.append('Upscales content without issue')
+cons_list = []
+cons_list.append('Risk of permanent burn-in')
+cons_list.append('May not be bright enough for very bright or sunny rooms')
 ############
 
 
@@ -283,7 +288,7 @@ def evaluate():
     price_history = '/static/item_folder/price_history.png'
     radar_chart = "https://miro.medium.com/max/1400/1*YFroPGj9dpPx7nqf045AUQ.png"
 
-    return render_template('product.html', critic_rating = critic_rating, user_rating = user_rating, price_score = price_score, review_list = review_list,
+    return render_template('product.html', critic_rating = critic_rating, user_rating = user_rating, price_score = price_score, review_list = review_list, pros_list = pros_list, cons_list = cons_list,
                            product_name = product_name, original_url = original_url, product_img_url = product_img_url, price_history= price_history, radar_chart = radar_chart)
 
 @app.route("/product/<website_special>/<product_code>")
@@ -298,7 +303,7 @@ def product(website_special = 'dp', product_code = 'B085WTYQ4X'):
             product_img_url = j['img']
             price_history = '/static/item_folder/price_history.png'
             radar_chart = "https://miro.medium.com/max/1400/1*YFroPGj9dpPx7nqf045AUQ.png"
-    return render_template('product.html', critic_rating = critic_rating, user_rating = user_rating, price_score = price_score, review_list = review_list,
+    return render_template('product.html', critic_rating = critic_rating, user_rating = user_rating, price_score = price_score, review_list = review_list, pros_list = pros_list, cons_list = cons_list,
                            product_name = product_name, original_url = original_url, product_img_url = product_img_url, price_history= price_history, radar_chart = radar_chart)
 
 @app.route('/myAccount')
