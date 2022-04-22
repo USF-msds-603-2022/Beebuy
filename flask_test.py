@@ -16,8 +16,7 @@ import time
 # member_folder = os.path.join('static','member_folder')
 
 app = Flask(__name__)
-app.secret_key = 'dev'
-# app.config['mbr_folder'] = member_folder
+app.secret_key = 'dev'# app.config['mbr_folder'] = member_folder
 bootstrap = Bootstrap4(app)
 csrf = CSRFProtect(app)
 login_manager = LoginManager()
@@ -119,30 +118,18 @@ class LogInForm(FlaskForm):
 
 
 
-@app.route("/favicon.ico")
-def favicon():
-    """
-    Open and return a 16x16 or 32x32 .png or other image file in binary mode.
-    This is the icon shown in the browser tab next to the title.
-    """
-    return send_from_directory(os.path.join(app.root_path, 'static'), 
-                            'favicon.ico', mimetype='image/vnd.microsoft.icon')
-
 @app.route("/")
 def basic():
     good_items = []
     bad_items = []
     for item in items:
-        # item_info = {}
-        # item_info['url'] = '/product/' + item['img_address'].strip('https://www.amazon.com/')
         url = '/product/' + 'dp/' + item['img_address'].split('/dp/')[1].split('/ref=')[0]
 
         if item['score'] > 6:
             good_items.append((item, url))
         if item['score'] <= 6:
             bad_items.append((item, url))
-    return render_template('main.html', good_items=good_items, bad_items=bad_items)
-    # return render_template('main.html', items=items)
+    return render_template('index.html',good_items=good_items, bad_items=bad_items)
     
 @app.route("/suggestion")
 def suggest():
@@ -164,36 +151,11 @@ def following():
     member_list.append({'name':'Jaysen Shi','role':'Data Engineer','linkedin':'https://www.linkedin.com/in/jaysenshi/','profile':'/static/member_folder/jaysen.png'})
     return render_template('about_page.html',member_list = member_list)
 
-# @app.route('/register',methods=['GET', 'POST'])
-# def register():
-#     form = Register()
-#     if form.validate_on_submit():
-#         return redirect(url_for('basic'))
-#     return render_template(
-#         'user.html',
-#         form=form
-#     ) 
-
-# @app.route('/login',methods=['GET', 'POST'])
-# def login():
-#     form = Login()
-#     if form.validate_on_submit():
-#         # flash('Form validated!')
-#         return redirect(url_for('myAccount'))
-#     return render_template(
-#         'user.html',
-#         form = form
-#     ) 
-
 
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(int(id))
 
-# @app.route('/index')
-# @app.route('/')
-# def index():
-#     return render_template('index.html', authenticated_user=current_user.is_authenticated)
 
 @app.route('/register',  methods=('GET', 'POST'))
 def register():
@@ -219,11 +181,6 @@ def register():
             return redirect(url_for('login'))
     return render_template('user.html',form=registration_form)
 
-# @app.route('/exam', methods=['GET', 'POST'])
-# @login_required
-# def examples():
-#     return render_template('examples.html', authenticated_user=current_user.is_authenticated,)
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -242,15 +199,6 @@ def login():
             flash('Invalid username and password combination!')
     return render_template('user.html', form=login_form)
 
-# @login_required(login_url='/example url you want redirect/') #redirect when user is not logged in
-# def myview(request):
-#     do something
-#     return something #returns when user is logged in
-
-# @app.after_request
-# def redirect_to_signin(response):
-#     if response.status_code == 401:
-#         return redirect('/login')
 
 @app.route('/logout')
 # @login_required
