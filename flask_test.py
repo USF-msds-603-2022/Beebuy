@@ -302,22 +302,15 @@ def evaluate():
     price_history = '/static/item_folder/price_history.png'
     radar_chart = "https://miro.medium.com/max/1400/1*YFroPGj9dpPx7nqf045AUQ.png"
 
-<<<<<<< HEAD
-    return render_template('product.html', critic_rating=critic_rating, user_rating=user_rating,
-                           price_score=price_score, review_list=review_list, pros_list=pros_list, cons_list=cons_list,
+    tempfile1 = 'product.html'
+    # tempfile2 = 'product_page_templates/product.html'
+
+    return render_template(tempfile1,
+                           critic_rating=critic_rating, user_rating=user_rating, price_score=price_score,
+                           review_list=review_list, pros_list=pros_list, cons_list=cons_list,
                            product_name=product_name, original_url=original_url, product_img_url=product_img_url,
                            price_history=price_history, radar_chart=radar_chart)
 
-=======
-    tempfile1 = 'product.html'
-    tempfile2 = 'product_page_templates/product.html'
-
-    return render_template(tempfile1,
-                           critic_rating = critic_rating, user_rating = user_rating, price_score = price_score,
-                           review_list = review_list, pros_list = pros_list, cons_list = cons_list,
-                           product_name = product_name, original_url = original_url, product_img_url = product_img_url,
-                           price_history= price_history, radar_chart = radar_chart)
->>>>>>> b3dc2de4af6812a845083ea3db033f34fd910acc
 
 @app.route("/product/<website_special>/<product_code>")
 def product(website_special='dp', product_code='B085WTYQ4X'):
@@ -331,23 +324,16 @@ def product(website_special='dp', product_code='B085WTYQ4X'):
             product_img_url = j['img']
             price_history = '/static/item_folder/price_history.png'
             radar_chart = "https://miro.medium.com/max/1400/1*YFroPGj9dpPx7nqf045AUQ.png"
-<<<<<<< HEAD
-    return render_template('product.html', critic_rating=critic_rating, user_rating=user_rating,
-                           price_score=price_score, review_list=review_list, pros_list=pros_list, cons_list=cons_list,
+
+    tempfile1 = 'product.html'
+    # tempfile2 = 'product_page_templates/product.html'
+
+    return render_template(tempfile1,
+                           critic_rating=critic_rating, user_rating=user_rating, price_score=price_score,
+                           review_list=review_list, pros_list=pros_list, cons_list=cons_list,
                            product_name=product_name, original_url=original_url, product_img_url=product_img_url,
                            price_history=price_history, radar_chart=radar_chart)
 
-=======
-
-    tempfile1 = 'product.html'
-    tempfile2 = 'product_page_templates/product.html'
-
-    return render_template(tempfile1,
-                           critic_rating = critic_rating, user_rating = user_rating, price_score = price_score,
-                           review_list = review_list, pros_list = pros_list, cons_list = cons_list,
-                           product_name = product_name, original_url = original_url, product_img_url = product_img_url,
-                           price_history= price_history, radar_chart = radar_chart)
->>>>>>> b3dc2de4af6812a845083ea3db033f34fd910acc
 
 @app.route('/myAccount')
 # @login_required
