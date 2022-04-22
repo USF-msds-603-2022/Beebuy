@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Shall We Buy? Theme</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="/static/css/styles_cover.css" rel="stylesheet" />
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="#page-top"><img src="static/img/logo.png" alt="..." /></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars ms-1"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#portfolio">Product</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#about">Account</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container">
+                <div class="masthead-heading text-uppercase">SHALL WE BUY?</div>
+                <input type="Search" aria-label="Search" aria-describedby="search-addon" />
+                <a href={{url_for('evaluate')}}>
+                    <button type="Search"  class="btn btn-outline-primary">Evaluate</button>
+                </a>
+                <!-- <a class="btn btn-primary btn-xl text-uppercase" href={{url_for('evaluate')}}>Find your product here</a> -->
+            </div>
+        </header>
+        <!-- Services-->
+        <section class="page-section" id="services">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">Services</h2>
+                    <h3 class="section-subheading text-muted">comprehensive perspective of product evaluation </h3>
+                </div>
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <span class="fa-stack fa-4x">
+                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                            <i class="fas fa-arrow-trend-down fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <h4 class="my-3">Price Trend</h4>
+                        <p class="text-muted">The price trend is created by tracking and monitoring prices consistently based on the data of real-price of past three months. The price trend can help users predict the lowest price of our products.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="fa-stack fa-4x">
+                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                            <i class="fas fa-thumbs-up fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <h4 class="my-3">Professional Rating</h4>
+                        <p class="text-muted">Trust-worthy ratings and reviews of our products given by industry professionals and leaders who have used our products.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="fa-stack fa-4x">
+                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                            <i class="fas fa-hands-asl-interpreting fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <h4 class="my-3">Our Suggestion</h4>
+                        <p class="text-muted">After comparing multiple similar products on our site, personalized product recommendations are created based on product features, prices, and ratings. Our suggestion will help users compare and decide between similar products.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Portfolio Grid-->
+        <section class="page-section bg-light" id="portfolio">
+            <div class="container">
+                <div class="text-center">
+                    
+                    <h2 class="section-subheading">Popular Items</h2><br>
+                </div>
+                <div class="row">
+                    {%for j in good_items%}
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <!-- Portfolio item 1-->
+                        
+                        <div class="portfolio-item">
+                            <a  href="{{j[1]}}" class="portfolio-link" >
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="{{j[0]['img']}}" alt="..." />
+                            </a>
+                        </div>                        
+                    </div>           
+                    {%endfor%}
+                    <div class="text-center">
+                    <h2 text-align: center class="section-subheading">Wait A Moment</h2><br>
+                    </div>
+                    {%for j in bad_items%}
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <!-- Portfolio item 1-->
+                        
+                        <div class="portfolio-item">
+                            <a href="{{j[1]}}" class="portfolio-link">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="{{j[0]['img']}}" alt="..." />
+                            </a>
+                            <!-- <div class="portfolio-caption">
+                                <div class="portfolio-caption-heading">Threads</div>
+                                <div class="portfolio-caption-subheading text-muted">Illustration</div>
+                            </div> -->
+                        </div>
+                        
+                    </div>
+                    {%endfor%}
+                </div>
+            </div>
+        </section>
+
+        <!-- Team-->
+        <section class="page-section bg-light" id="team">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">Our Team</h2><br>
+                    <!-- <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3> -->
+                </div>
+                <!-- <div class="row"> -->
+                    <div class="col-sm-">
+                        <div class="team-member">
+                            <img class="mx-auto rounded-circle" src="static/member_folder/david.png" alt="center" />
+                            <h4>David Lyu</h4>
+                            <p class="text-muted">CEO</p>
+                            <a class="btn btn-dark btn-social mx-2" href="https://www.linkedin.com/in/david-muhuan-lyu/" aria-label="David Profile"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="team-member">
+                            <img class="mx-auto rounded-circle" src="static/member_folder/yoli.png" alt="..." />
+                            <h4>Yoli Wu</h4>
+                            <p class="text-muted">CTO</p>
+                            <a class="btn btn-dark btn-social mx-2" href="https://www.linkedin.com/in/you-yoli-wu/" aria-label="Yoli Profile"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="team-member">
+                            <img class="mx-auto rounded-circle" src="static/member_folder/young.png" alt="..." />
+                            <h4>Young Zeng</h4>
+                            <p class="text-muted">COO</p>
+                             <a class="btn btn-dark btn-social mx-2" href="https://www.linkedin.com/in/yixuan-young-zeng-574359105/" aria-label="Young Profile"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="team-member">
+                            <img class="mx-auto rounded-circle" src="static/member_folder/chandan.png" alt="..." />
+                            <h4>Chandan Nayak</h4>
+                            <p class="text-muted">Product Manager</p>
+                             <a class="btn btn-dark btn-social mx-2" href="https://www.linkedin.com/in/nayakchandan/" aria-label="Chandan Profile"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="team-member">
+                            <img class="mx-auto rounded-circle" src="static/member_folder/meilin.png" alt="..." />
+                            <h4>Meilin Li</h4>
+                            <p class="text-muted">Data Scientist</p>
+                             <a class="btn btn-dark btn-social mx-2" href="https://www.linkedin.com/in/li-meilin" aria-label="Meilin Profile"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="team-member">
+                            <img class="mx-auto rounded-circle" src="static/member_folder/jaysen.png" alt="..." />
+                            <h4>Jaysen Shi</h4>
+                            <p class="text-muted">Data Engineer</p>
+                             <a class="btn btn-dark btn-social mx-2" href="https://www.linkedin.com/in/jaysenshi/" aria-label="Jaysen Profile"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div> 
+                    <div class="col-lg-4">
+                        <div class="team-member">
+                            <img class="mx-auto rounded-circle" src="static/member_folder/yunhe.png" alt="..." />
+                            <h4>Yunhe Jia</h4>
+                            <p class="text-muted">Software Engineer</p>
+                             <a class="btn btn-dark btn-social mx-2" href="https://www.linkedin.com/in/yunhe-j-380651172/" aria-label="Yunhe Profile"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>                                                            
+                </div>
+                <div class="row">
+                    <div class="col-lg-8 mx-auto text-center"><p class="large text-muted">&copy; 2022 Shall We Buy, Inc.</p></div>
+                </div>
+            </div>
+        </section>
+        <!-- Clients-->
+
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </body>
+</html>
