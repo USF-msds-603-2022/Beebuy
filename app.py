@@ -1,30 +1,90 @@
-from flask import Flask,  render_template,send_from_directory
-from flask_sqlalchemy import SQLAlchemy
-from wtforms.fields import *
-from werkzeug.security import check_password_hash
-from flask_login import LoginManager, UserMixin
-from flask_wtf import FlaskForm, CSRFProtect
-from flask_bootstrap import Bootstrap4, SwitchField
-from flask import Flask, render_template, request, flash, Markup, redirect, url_for
-from wtforms.validators import DataRequired, Length, Regexp,EqualTo
-from wtforms.fields import *
-from werkzeug.security import generate_password_hash
 import os
-from flask_login import current_user, login_user, login_required, logout_user
-import time
-# from django.contrib.auth.decorators import login_required
-# member_folder = os.path.join('static','member_folder')
+import sys
+import click
+from flask import Flask, flash, redirect, render_template, send_from_directory, url_for
+from flask_bootstrap import Bootstrap4
+from flask_wtf import CSRFProtect, FlaskForm
+from wtforms import *
+from wtforms.validators import DataRequired
+from flask_login import LoginManager, UserMixin, current_user, login_required, login_user, logout_user
+from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 
+"""
+    ____             __ _                            _   _             
+   / ___|___  _ __  / _(_) __ _ _   _ _ __ ___  __ _| |_(_) ___  _ __  
+  | |   / _ \| '_ \| |_| |/ _` | | | | '__/ _ \/ _` | __| |/ _ \| '_ \ 
+  | |__| (_) | | | |  _| | (_| | |_| | | |  __/ (_| | |_| | (_) | | | |
+   \____\___/|_| |_|_| |_|\__, |\__,_|_|  \___|\__,_|\__|_|\___/|_| |_|
+                          |___/                                        
+"""
+WIN = sys.platform.startswith('win')
+if WIN:
+    prefix = 'sqlite:///'
+else:
+    prefix = 'sqlite:////'
 app = Flask(__name__)
-app.secret_key = 'dev'# app.config['mbr_folder'] = member_folder
-bootstrap = Bootstrap4(app)
-csrf = CSRFProtect(app)
-login_manager = LoginManager()
-login_manager.init_app(app)
-
+app.config['SQLALCHEMY_DATABASE_URI'] = prefix + os.path.join(app.root_path, 'data.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = 'dev'
 db = SQLAlchemy(app)
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+csrf = CSRFProtect(app)
+bootstrap = Bootstrap4(app)
 
-# database input
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(int(id))
+
+"""
+    ____ __  __ ____  
+   / ___|  \/  |  _ \ 
+  | |   | |\/| | | | |
+  | |___| |  | | |_| |
+   \____|_|  |_|____/ 
+"""
+@app.cli.command
+@click.option('--drop', is_flag=True, help='Create after drop')
+def initdb(drop):
+    if drop:
+        db.drop_all()
+    db.create_all()
+    click.echo('Initialized database.')
+
+"""
+   __  __           _      _ 
+  |  \/  | ___   __| | ___| |
+  | |\/| |/ _ \ / _` |/ _ \ |
+  | |  | | (_) | (_| |  __/ |
+  |_|  |_|\___/ \__,_|\___|_|
+"""
+class User(db.Model, UserMixin):
+    id =            db.Column(db.Integer, primary_key=True)
+    username =      db.Column(db.String(80), unique=True, nullable=False)
+    email =         db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(128), nullable=False)
+    
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
+    
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
+
+class RegistrationForm(FlaskForm):
+    username = StringField('Username:', validators=[DataRequired()])
+    email = StringField('Email:', validators=[DataRequired()])
+    password = PasswordField('Password:', validators=[DataRequired()])
+    # Need to use different name for WTF check.
+    submit1 = SubmitField('Submit')
+
+class LogInForm(FlaskForm):
+    username = StringField('Username:', validators=[DataRequired()])
+    password = PasswordField('Password:', validators=[DataRequired()])
+    # Need to use different name for WTF check.
+    submit2 = SubmitField('Login')
+
+
 items = []
 items.append({'name':'Samsung','code':'B08V37JHSQ','score':9, 'critic_rating':95, 'user_rating':4.4, 'price_score': 'Good',
               'img_address':'https://www.amazon.com/SAMSUNG-85-Inch-Class-QN85A-Built/dp/B08V37JHSQ/ref=sr_1_1_sspa?crid=3ADPK2WZ7TB3L&keywords=Samsung+tv&qid=1649383624&sprefix=samsung+tv%2Caps%2C282&sr=8-1-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUExV0tJSFJGSFpBVk9NJmVuY3J5cHRlZElkPUEwMDM4NjE2MVJPVUNNV1cyWDZTOSZlbmNyeXB0ZWRBZElkPUExMDA4MTc5WjRPTTRVRTlNRUJJJndpZGdldE5hbWU9c3BfYXRmJmFjdGlvbj1jbGlja1JlZGlyZWN0JmRvTm90TG9nQ2xpY2s9dHJ1ZQ==',
@@ -44,86 +104,16 @@ items.append({'name':'Insignia','code':'B08Z265BJH','score':4.6, 'critic_rating'
 items.append({'name':'VIZIO','code':'B092Q8L5DV','score':6.0, 'critic_rating':67, 'user_rating':3.1, 'price_score': 'Poor',
               'img_address':'https://www.amazon.com/VIZIO-65-Inch-AirPlay-Chromecast-V655-J09/dp/B092Q8L5DV/ref=sr_1_2?crid=1P4G301WOXA19&keywords=VIZIO+tv&qid=1649382210&sprefix=vizio+t+v%2Caps%2C282&sr=8-2',
               'img':'https://m.media-amazon.com/images/I/81ii3VScCbL._AC_SL1500_.jpg'})
-# items.append({'name':'Toshiba','code':'B0924SX7P1','score':7.5,'img_address':'https://www.amazon.com/Toshiba-65-inch-4K-UHD-Smart-Fire-TV/dp/B0924SX7P1/ref=sr_1_5_sspa?gclid=EAIaIQobChMIjr_RrdyD9wIVxDizAB3DWA3WEAAYASAAEgIKBPD_BwE&hvadid=557209947814&hvdev=c&hvlocphy=1014221&hvnetw=g&hvqmt=b&hvrand=1267777265010267032&hvtargid=kwd-297505614716&hydadcr=20142_13296026&keywords=tv+at+amazon&qid=1649395315&sr=8-5-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUFEWk9MSzROQ1VKOUImZW5jcnlwdGVkSWQ9QTA1MDU0NTEyVERPRzBMNVdLNjlZJmVuY3J5cHRlZEFkSWQ9QTAxMTYwNjVWSTkxVkVaTTdTNTYmd2lkZ2V0TmFtZT1zcF9tdGYmYWN0aW9uPWNsaWNrUmVkaXJlY3QmZG9Ob3RMb2dDbGljaz10cnVl','img':'https://m.media-amazon.com/images/I/81QvlthwGRS._AC_SL1500_.jpg'})
 
-class SearchBar(FlaskForm):
-    search = SearchField()
-
-
-
-class Register(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Length(1, 20)])
-    email = EmailField('Email')
-    password = PasswordField('Password', validators=[DataRequired(), Length(8,150)])
-    confirmpassword = PasswordField('Confirm Password',validators=[DataRequired(), Length(8, 150),\
-        EqualTo('password', message='Passwords must match')])
-    accept_tos = BooleanField('I accept the Terms of Service and Privacy Notice', [DataRequired()])
-    submit = SubmitField('Register')
-
-class Login(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Length(1, 20)])
-    email = EmailField('Email')
-    password = PasswordField('Password', validators=[DataRequired(), Length(8, 150)])
-    submit = SubmitField('login')
-
-
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(80), unique=True, nullable=False)
-    password_hash = db.Column(db.String(120), nullable=False)
-
-    def __init__(self, username, email, password):
-        self.username = username
-        self.email = email
-        self.set_password(password)
-
-    def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
-
-    def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
-
-class RegisterTime(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    register_time = db.Column(db.Integer) ## Epoch Time
-    username = db.Column(db.String(80), db.ForeignKey(User.username)) ## User who registered
-
-    def __init__(self, username):
-        self.username = username
-        self.register_time = time.time()
-
-class LoginTime(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    login_time = db.Column(db.Integer) ## Epoch Time
-    username = db.Column(db.String(80), db.ForeignKey(User.username)) ## User who registered
-
-    def __init__(self, username):
-        self.username = username
-        self.login_time = time.time()
-
-db.create_all()
-db.session.commit()
-
-class RegistrationForm(FlaskForm):
-    username = StringField('Username:', validators=[DataRequired()])
-    email = StringField('Email:', validators=[DataRequired()])
-    password = PasswordField('Password:', validators=[DataRequired()])
-    submit = SubmitField('Submit')
-
-class LogInForm(FlaskForm):
-    username = StringField('Username:', validators=[DataRequired()])
-    password = PasswordField('Password:', validators=[DataRequired()])
-    submit = SubmitField('Login')
-
-
-
+"""
+    ____ _____ ____  _              
+   / ___|_   _|  _ \| |    ___ _ __ 
+  | |     | | | |_) | |   / _ \ '__|
+  | |___  | | |  _ <| |__|  __/ |   
+   \____| |_| |_| \_\_____\___|_|   
+"""
 @app.route("/favicon.ico")
 def favicon():
-    """
-    Open and return a 16x16 or 32x32 .png or other image file in binary mode.
-    This is the icon shown in the browser tab next to the title.
-    """
     return send_from_directory(os.path.join(app.root_path, 'static'), 
                             'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
@@ -132,8 +122,6 @@ def basic():
     good_items = []
     bad_items = []
     for item in items:
-        # item_info = {}
-        # item_info['url'] = '/product/' + item['img_address'].strip('https://www.amazon.com/')
         url = '/product/' + 'dp/' + item['img_address'].split('/dp/')[1].split('/ref=')[0]
 
         if item['score'] > 6:
@@ -141,22 +129,7 @@ def basic():
         if item['score'] <= 6:
             bad_items.append((item, url))
     return render_template('index.html',good_items=good_items, bad_items=bad_items)
-# @app.route("/home")
-# def basic():
-#     good_items = []
-#     bad_items = []
-#     for item in items:
-#         # item_info = {}
-#         # item_info['url'] = '/product/' + item['img_address'].strip('https://www.amazon.com/')
-#         url = '/product/' + 'dp/' + item['img_address'].split('/dp/')[1].split('/ref=')[0]
 
-#         if item['score'] > 6:
-#             good_items.append((item, url))
-#         if item['score'] <= 6:
-#             bad_items.append((item, url))
-#     return render_template('main.html', good_items=good_items, bad_items=bad_items)
-    # return render_template('main.html', items=items)
-    
 @app.route("/suggestion")
 def suggest():
     return render_template('suggestion.html', items=items)
@@ -177,78 +150,55 @@ def following():
     member_list.append({'name':'Jaysen Shi','role':'Data Engineer','linkedin':'https://www.linkedin.com/in/jaysenshi/','profile':'/static/member_folder/jaysen.png'})
     return render_template('about_page.html',member_list = member_list)
 
-
-@login_manager.user_loader
-def load_user(id):
-    return User.query.get(int(id))
-
-# @app.route('/index')
-# @app.route('/')
-# def index():
-#     return render_template('index.html', authenticated_user=current_user.is_authenticated)
-
-@app.route('/register',  methods=('GET', 'POST'))
-def register():
-    # https://flask.palletsprojects.com/en/2.1.x/patterns/wtforms/
-    registration_form = Register()
-    if registration_form.validate_on_submit():
-        username = registration_form.username.data
-        password = registration_form.password.data
-        email = registration_form.email.data
-
-        user_count = User.query.filter_by(username=username).count() \
-                        + User.query.filter_by(email=email).count()
-
-        if(user_count > 0):
-            flash('Error - Existing user : ' + username + ' OR ' + email)            
-        else:
-            user = User(username, email, password)
-            rt = RegisterTime(username)
-            db.session.add(user)
-            db.session.add(rt)
-            db.session.commit()
-            # flash('Thanks for registering!')
-            return redirect(url_for('login'))
-    return render_template('user.html',form=registration_form)
-
-# @app.route('/exam', methods=['GET', 'POST'])
-# @login_required
-# def examples():
-#     return render_template('examples.html', authenticated_user=current_user.is_authenticated,)
-
-
+########## User Related ##########
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    login_form = Login()
-    print("test1")
-    if login_form.validate_on_submit():
-        # username = request.form['Username']
+    registration_form = RegistrationForm()
+    login_form = LogInForm()
+    # Registration
+    if registration_form.submit1.data and registration_form.validate_on_submit():
+        username = registration_form.username.data
+        # Hash the password and store
+        password = generate_password_hash(registration_form.password.data)
+        email = registration_form.email.data
+        user_count = User.query.filter_by(username = username).count() + + User.query.filter_by(email=email).count()
+        if user_count > 0:
+            flash('error - Existing user : ' + username + ' OR ' + email)
+        else:
+            user = User(username=username, password=password, email=email)
+            db.session.add(user)
+            db.session.commit()
+            flash('Welcome, ' + username)
+            return redirect(url_for('login'))
+    # Login
+    if login_form.submit2.data and login_form.validate_on_submit():
         username = login_form.username.data
         password = login_form.password.data
-        # Look for it in the database.
-        print('before')
         user = User.query.filter_by(username=username).first()
-        # Login and validate the user.
-        
         if user is not None and user.check_password(password):
-            print('after')
             login_user(user)
             return redirect(url_for('basic'))
-            # render_template('index.html')
         else:
-            print (user,password)
-            flash('Invalid username and password combination!')
-    return render_template('user.html', form=login_form)
-
+            flash('Invalid username or password combination!')
+    return render_template('user.html', form1=registration_form, form2=login_form)
 
 @app.route('/logout')
-# @login_required
+@login_required
 def logout():
     if current_user.is_authenticated:
         logout_user()
         return redirect(url_for('basic'))
     else:
         return render_template('error_page.html')
+
+@app.route('/account')
+@login_required
+def myAccount():
+    if current_user.is_authenticated:
+        return render_template('myaccount.html',items = items)
+    else:
+        flash("Please login first")
+        return redirect(url_for('login'))
 
 ############ This are hard-coded variables
 review_list = []
@@ -301,17 +251,3 @@ def product(website_special = 'dp', product_code = 'B085WTYQ4X'):
             radar_chart = "https://miro.medium.com/max/1400/1*YFroPGj9dpPx7nqf045AUQ.png"
     return render_template('product.html', critic_rating = critic_rating, user_rating = user_rating, price_score = price_score, review_list = review_list, pros_list = pros_list, cons_list = cons_list,
                             product_name = product_name, original_url = original_url, product_img_url = product_img_url, price_history= price_history, radar_chart = radar_chart)
-
-@app.route('/myAccount')
-# @login_required
-def myAccount():
-    if current_user.is_authenticated:
-        return render_template('myaccount.html',items = items)
-    else:
-        # flash("Please login first")
-        return render_template('error_page.html')
-        # return redirect(url_for('login'))
-    
-
-if __name__=='__main__':
-    app.run(host='0.0.0.0',debug = True)
