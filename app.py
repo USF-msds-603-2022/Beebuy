@@ -24,7 +24,8 @@ if WIN:
 else:
     prefix = 'sqlite:////'
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = prefix + os.path.join(app.root_path, 'data.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Shouldwebuy168@group6-db.ciuiqprwm79f.us-east-1.rds.amazonaws.com/postgres'
+# prefix + os.path.join(app.root_path, 'data.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'dev'
 db = SQLAlchemy(app)
@@ -60,6 +61,7 @@ def initdb(drop):
   |_|  |_|\___/ \__,_|\___|_|
 """
 class User(db.Model, UserMixin):
+    __tablename__ = 'users'
     id =            db.Column(db.Integer, primary_key=True)
     username =      db.Column(db.String(80), unique=True, nullable=False)
     email =         db.Column(db.String(80), unique=True, nullable=False)
@@ -251,3 +253,6 @@ def product(website_special = 'dp', product_code = 'B085WTYQ4X'):
             radar_chart = "https://miro.medium.com/max/1400/1*YFroPGj9dpPx7nqf045AUQ.png"
     return render_template('product.html', critic_rating = critic_rating, user_rating = user_rating, price_score = price_score, review_list = review_list, pros_list = pros_list, cons_list = cons_list,
                             product_name = product_name, original_url = original_url, product_img_url = product_img_url, price_history= price_history, radar_chart = radar_chart)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', debug=True)
