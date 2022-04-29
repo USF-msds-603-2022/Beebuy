@@ -4,7 +4,6 @@ import click
 from flask import Flask, flash, redirect, render_template, send_from_directory, url_for
 from flask_bootstrap import Bootstrap4
 from flask_wtf import CSRFProtect, FlaskForm
-from wtforms import *
 from wtforms import StringField, PasswordField,SubmitField
 from wtforms.validators import DataRequired
 from flask_login import LoginManager, UserMixin, current_user, login_required, login_user, logout_user
