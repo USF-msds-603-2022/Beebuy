@@ -4,6 +4,7 @@ import click
 from flask import Flask, flash, redirect, render_template, send_from_directory, url_for
 from flask_bootstrap import Bootstrap4
 from flask_wtf import CSRFProtect, FlaskForm
+from wtforms import *
 from wtforms import StringField, PasswordField,SubmitField
 from wtforms.validators import DataRequired
 from flask_login import LoginManager, UserMixin, current_user, login_required, login_user, logout_user
@@ -24,7 +25,8 @@ if WIN:
 else:
     prefix = 'sqlite:////'
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Shouldwebuy168@group6-db.ciuiqprwm79f.us-east-1.rds.amazonaws.com/postgres'
+sql_connection_string = os.environ['SQL_STRING']
+app.config['SQLALCHEMY_DATABASE_URI'] = sql_connection_string
 # prefix + os.path.join(app.root_path, 'data.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'dev'
