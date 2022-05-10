@@ -222,11 +222,15 @@ pros_list.append('Upscales content without issue')
 cons_list = []
 cons_list.append('Risk of permanent burn-in')
 cons_list.append('May not be bright enough for very bright or sunny rooms')
+cons_list.append('No way to disable ads on the interface')
 ############
 
 
 @app.route("/product/dp/B08WFV7L3N")
 def evaluate():
+    template1 = 'index_product.html'
+    template2 = 'product.html'
+
     original_url = 'https://www.amazon.com/' + 'dp/B08WFV7L3N'
 
     critic_rating = 85
@@ -237,11 +241,13 @@ def evaluate():
     price_history = '/static/item_folder/price_history.png'
     radar_chart = "https://miro.medium.com/max/1400/1*YFroPGj9dpPx7nqf045AUQ.png"
 
-    return render_template('product.html', critic_rating = critic_rating, user_rating = user_rating, price_score = price_score, review_list = review_list, pros_list = pros_list, cons_list = cons_list,
+    return render_template(template1, critic_rating = critic_rating, user_rating = user_rating, price_score = price_score, review_list = review_list, pros_list = pros_list, cons_list = cons_list,
                             product_name = product_name, original_url = original_url, product_img_url = product_img_url, price_history= price_history, radar_chart = radar_chart)
 
 @app.route("/product/<website_special>/<product_code>")
 def product(website_special = 'dp', product_code = 'B085WTYQ4X'):
+    template1 = 'index_product.html'
+    template2 = 'product.html'
     original_url = 'https://www.amazon.com/' + website_special + '/' + product_code
     for j in items:
         if j['code'] == product_code:
@@ -252,7 +258,7 @@ def product(website_special = 'dp', product_code = 'B085WTYQ4X'):
             product_img_url = j['img']
             price_history = '/static/item_folder/price_history.png'
             radar_chart = "https://miro.medium.com/max/1400/1*YFroPGj9dpPx7nqf045AUQ.png"
-    return render_template('product.html', critic_rating = critic_rating, user_rating = user_rating, price_score = price_score, review_list = review_list, pros_list = pros_list, cons_list = cons_list,
+    return render_template(template1, critic_rating = critic_rating, user_rating = user_rating, price_score = price_score, review_list = review_list, pros_list = pros_list, cons_list = cons_list,
                             product_name = product_name, original_url = original_url, product_img_url = product_img_url, price_history= price_history, radar_chart = radar_chart)
 
 if __name__ == '__main__':
