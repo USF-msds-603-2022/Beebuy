@@ -24,9 +24,8 @@ if WIN:
 else:
     prefix = 'sqlite:////'
 app = Flask(__name__)
-sql_connection_string = os.environ['SQL_STRING']
-app.config['SQLALCHEMY_DATABASE_URI'] = sql_connection_string
-# prefix + os.path.join(app.root_path, 'data.db')
+#sql_connection_string = os.environ['SQL_STRING']
+app.config['SQLALCHEMY_DATABASE_URI'] = prefix + os.path.join(app.root_path, 'data.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'dev'
 db = SQLAlchemy(app)
