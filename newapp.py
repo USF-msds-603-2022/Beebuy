@@ -4,7 +4,7 @@ import click
 from flask import Flask, flash, redirect, render_template, send_from_directory, url_for
 from flask_bootstrap import Bootstrap4
 from flask_wtf import CSRFProtect, FlaskForm
-from wtforms import *
+from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired
 from flask_login import LoginManager, UserMixin, current_user, login_required, login_user, logout_user
 from flask_sqlalchemy import SQLAlchemy
@@ -25,7 +25,7 @@ else:
     prefix = 'sqlite:////'
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Shouldwebuy168@group6-db.ciuiqprwm79f.us-east-1.rds.amazonaws.com/postgres'
-# prefix + os.path.join(app.root_path, 'data.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = prefix + os.path.join(app.root_path, 'data.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'dev'
 db = SQLAlchemy(app)
@@ -61,7 +61,6 @@ def initdb(drop):
   |_|  |_|\___/ \__,_|\___|_|
 """
 class User(db.Model, UserMixin):
-    __tablename__ = 'users'
     id =            db.Column(db.Integer, primary_key=True)
     username =      db.Column(db.String(80), unique=True, nullable=False)
     email =         db.Column(db.String(80), unique=True, nullable=False)
@@ -134,21 +133,11 @@ def basic():
 
 @app.route("/suggestion")
 def suggest():
-  good_items = []
-  for item in items:
-      url = '/product/' + 'dp/' + item['img_address'].split('/dp/')[1].split('/ref=')[0]
-      if item['score'] > 5:
-          good_items.append((item, url))
-  return render_template('suggestion.html', good_items=good_items)
+    return render_template('suggestion.html', items=items)
     
 @app.route("/dontbuy")
 def dontbuy():
-  bad_items = []
-  for item in items:
-      url = '/product/' + 'dp/' + item['img_address'].split('/dp/')[1].split('/ref=')[0]
-      if item['score'] <= 8:
-          bad_items.append((item, url))
-  return render_template('dontbuy.html', bad_items=bad_items)
+    return render_template('dontbuy.html', items=items)
 
 @app.route("/about")
 def following():
@@ -234,28 +223,29 @@ cons_list.append('May not be bright enough for very bright or sunny rooms')
 cons_list.append('No way to disable ads on the interface')
 ############
 
-
 @app.route("/product/dp/B08WFV7L3N")
 def evaluate():
-    template1 = 'index_product.html'
-    template2 = 'product.html'
-    original_url = 'https://www.amazon.com/' + 'dp/B08WFV7L3N'
+  template1 = 'index_product.html'
+  template2 = 'product.html'
+  
+  original_url = 'https://www.amazon.com/' + 'dp/B08WFV7L3N'
+  
+  critic_rating = 85
+  user_rating = 4.2
+  price_score = 'Great'
+  product_name = "LG OLED C1 Series"
+  product_img_url = "/static/item_folder/lg_c1.jpeg"
+  price_history = '/static/item_folder/price_history.png'
+  radar_chart = "https://miro.medium.com/max/1400/1*YFroPGj9dpPx7nqf045AUQ.png"
+  
+  return render_template(template1, critic_rating = critic_rating, user_rating = user_rating, price_score = price_score, review_list = review_list, pros_list = pros_list, cons_list = cons_list,
+product_name = product_name, original_url = original_url, product_img_url = product_img_url, price_history= price_history, radar_chart = radar_chart)
 
-    critic_rating = 85
-    user_rating = 4.2
-    price_score = 'Great'
-    product_name = "LG OLED C1 Series"
-    product_img_url = "/static/item_folder/lg_c1.jpeg"
-    price_history = '/static/item_folder/price_history.png'
-    radar_chart = "https://miro.medium.com/max/1400/1*YFroPGj9dpPx7nqf045AUQ.png"
-
-    return render_template(template1, critic_rating = critic_rating, user_rating = user_rating, price_score = price_score, review_list = review_list, pros_list = pros_list, cons_list = cons_list,
-                            product_name = product_name, original_url = original_url, product_img_url = product_img_url, price_history= price_history, radar_chart = radar_chart)
 
 @app.route("/product/<website_special>/<product_code>")
 def product(website_special = 'dp', product_code = 'B085WTYQ4X'):
     template1 = 'index_product.html'
-    template2 = 'product.html'  
+    template2 = 'product.html'
     original_url = 'https://www.amazon.com/' + website_special + '/' + product_code
     for j in items:
         if j['code'] == product_code:
@@ -266,8 +256,7 @@ def product(website_special = 'dp', product_code = 'B085WTYQ4X'):
             product_img_url = j['img']
             price_history = '/static/item_folder/price_history.png'
             radar_chart = "https://miro.medium.com/max/1400/1*YFroPGj9dpPx7nqf045AUQ.png"
-    return render_template(template1, critic_rating = critic_rating, user_rating = user_rating, price_score = price_score, review_list = review_list, pros_list = pros_list, cons_list = cons_list,
-                            product_name = product_name, original_url = original_url, product_img_url = product_img_url, price_history= price_history, radar_chart = radar_chart)
+    return render_template(template1, critic_rating = critic_rating, user_rating = user_rating, price_score = price_score, review_list = review_list, pros_list = pros_list, cons_list = cons_list, product_name = product_name, original_url = original_url, product_img_url = product_img_url, price_history= price_history, radar_chart = radar_chart)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

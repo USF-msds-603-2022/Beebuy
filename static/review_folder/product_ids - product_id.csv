@@ -1,0 +1,11 @@
+ID,Name,Manufacturer,Size,amzn,tech
+1,Amazon Fire TV,Amazon,65,https://www.amazon.com/amazon-fire-tv-55-inch-4-series-4k-smart-tv/dp/B08P3QB66R/ref=zg_bs_172659_1/134-4110017-7543854?pd_rd_i=B08P3QB66R&psc=1,LED
+2,Vizio V-series,Vizio,42,https://www.amazon.com/VIZIO-50-Inch-AirPlay-Chromecast-V505-J09/dp/B092PSB41B/ref=zg_bs_172659_2/134-4110017-7543854?pd_rd_i=B092PSB41B&psc=1,LED
+3,TCL 3 series,TCL,32,https://www.amazon.com/TCL-32-720p-ROKU-Smart/dp/B088S3V3R4/ref=zg_bs_172659_4/134-4110017-7543854?pd_rd_i=B088S3V3R4&psc=1,LED
+4,TCL 4 Series Roku Smart TV,TCL,32,https://www.amazon.com/TCL-32S327-32-Inch-1080p-Smart/dp/B07F981R8M/ref=zg_bs_172659_6/134-4110017-7543854?pd_rd_i=B07F981R8M&psc=1,LED
+5,LG OLED C1,LG,55,https://www.amazon.com/LG-OLED55C1PUB-Alexa-Built-Smart/dp/B08WFV7L3N/ref=zg_bs_6463520011_1/134-4110017-7543854?pd_rd_i=B08WFV7L3N&psc=1,OLED
+6,LG OLED G1,LG,65,https://www.amazon.com/LG-OLED65G1PUA-Built-Gallery-Design/dp/B08WFX5H7R/ref=zg_bs_6463520011_5/134-4110017-7543854?pd_rd_i=B08WFX5H7R&psc=1,OLED
+7,Sony A80J,Sony,65,https://www.amazon.com/Sony-A80J-Inch-Compatibility-XR65A80J/dp/B08TKR3WLJ/ref=zg_bs_6463520011_6/134-4110017-7543854?pd_rd_i=B08TKR3WLJ&psc=1,OLED
+8,Sony A90J,Sony,65,https://www.amazon.com/Sony-A90J-Inch-Compatibility-XR55A90J/dp/B08QXCPPLH/ref=zg_bs_6463520011_15/134-4110017-7543854?pd_rd_i=B08QXCPPLH&psc=1,OLED
+9,Hisense ULED U8G,Hisense,55,https://www.amazon.com/Hisense-Premium-55-Inch-Compatibility-55U8G/dp/B091YJQGVW/ref=zg_bs_21489946011_2/134-4110017-7543854?pd_rd_i=B091YJQGVW&th=1,ULED
+10,Samsung Q90A,Samsung,75,https://www.amazon.com/SAMSUNG-75-Inch-Class-QLED-Built/dp/B08SF5VR9V/ref=zg_bs_21489946011_5/134-4110017-7543854?pd_rd_i=B08SF5VR9V&th=1,ULED

@@ -1,28 +1,82 @@
-{% extends 'layout.html' %}
-
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>dontbuy</title>
-</head>
-<body>
-{% block content %}
-    <h1 class="mt-4">Don't Buy Them</h1>
-    <p>dontbuy here :)</p>
-    <div class="container-fluid">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>BeeBuy</title>
+        <!-- Favicon-->
+        <!-- <link rel="icon" type="image/x-icon" href="assets/favicon.ico" /> -->
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="/static/css/styles_cover.css" rel="stylesheet" />
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="/"><img src="../static/img/logo.png" alt="..." /></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars ms-1"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="/#services">Services</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/#portfolio">Product</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/#team">Team</a></li>
+                        {% if current_user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="/account">Account</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link" href="/login">Login/Signup</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <header class="masthead">
+            <div class="container">
+                <div class="masthead-heading text-uppercase">beebuy</div>
+                <a>
+                    <h2>Wait A Moment</h2>
+                </a>
+                <!-- <a class="btn btn-primary btn-xl text-uppercase" href={{url_for('evaluate')}}>Find your product here</a> -->
+            </div>
+        </header>
+        
         <div class="container">
-            <div class="row ">
-                {%for j in items%}    
-                    {% if j['score'] <= 7.0%}  
-                        <div class="col-lg-4 col-md-12">
-                            <a href="{{j['img_address']}}"> 
-                            <img src="{{j['img']}}" width="150" height="100" class="rounded float-left" alt="...">
-                            </a>
-                        </div>
-                    {% endif %}
+            <div class="row">
+                {%for j in bad_items%}
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <!-- Portfolio item 1-->
+                    
+                    <div class="portfolio-item">
+                        <a  href="{{j[1]}}" class="portfolio-link" >
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="{{j[0]['img']}}" alt="..." />
+                        </a>
+                    </div>                        
+                </div>           
                 {%endfor%}
             </div>
         </div>
-    </div>
-{% endblock %}
-</body>
+        
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </body>
 </html>

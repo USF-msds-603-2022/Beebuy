@@ -29,7 +29,9 @@
                     <div class="container-fluid">
 
                         <div class="input-group rounded">
-                        <input type="Search" class="form-control rounded" placeholder="Paste Product Link Here" aria-label="Search" aria-describedby="search-addon" />
+                            <form name="search" action="~/query_scorer.py" method="get">
+                                <input type="Search" class="form-control rounded" placeholder="Paste Product Link Here" aria-label="Search" aria-describedby="search-addon" name="searchbox"/>
+                            </form>
                         <a href={{url_for('evaluate')}}>
                             <button type="button" class="btn btn-outline-primary">Evaluate This Product</button>
                         </a>
