@@ -18,6 +18,14 @@ We understand that everyone has at least experienced one of the following situat
 1. We present a graph the price history of the provided item, ideally even from multiple website.
 2. We process reviews of other customers and make a summary out of all the reviews.
 3. We present a list of similar or related products for the user to compare and consider.
+
+## Algorithms behind the Website
+### Keyword extration and sentimental analysis
+We extract the keywords from the professional critics and use the context around the keyword to conduct sentimental analysis so we can know if the attitude towards this keyword is positive. These are deployed by a simple script [here](lib/keyword_sentiment.py). <br />
+<br />
+Here is an example of how this little package works.<br />
+<img src="image/Keyword.png" width = "500">
+
 ## Website 🖥  
 ### Main Page
 <img src="image/main1.png" width = "600">
