@@ -18,14 +18,23 @@ We understand that everyone has at least experienced one of the following situat
 1. We present a graph the price history of the provided item, ideally even from multiple website.
 2. We process reviews of other customers and make a summary out of all the reviews.
 3. We present a list of similar or related products for the user to compare and consider.
+## Website 🖥  
+### Main Page
+<img src="image/main1.png" width = "600">
+<img src="image/main2.png" width = "600">
+<img src="image/main3.png" width = "600">
+
+### Product Page
+<img src="image/product1.png" width = "600">
+<img src="image/product2.png" width = "600">
 
 ### Meet our members:
 | Position | Name |
 | --- | --- |
-| CEO | David Lyu |
-| CTO | Yoli Wu |
-| COO | Young Zeng |
-| Product Manager | Chandan Nayak |
-| Software Engineer | Yunhe Jia |
-| Data Scientist | Meilin Li |
-| Data Engineer | Jaysen Shi |
+| CEO | [David Lyu](https://github.com/MuhuanLyu) |
+| CTO | [Yoli Wu](https://github.com/hereisyoli) |
+| COO | [Young Zeng](https://github.com/youngzyx) |
+| Product Manager | [Chandan Nayak](https://github.com/nayakchandan) |
+| Software Engineer | [Yunhe Jia](https://github.com/YunheJ) |
+| Data Scientist | [Meilin Li](https://github.com/meilin-l99) |
+| Data Engineer | [Jaysen Shi](https://github.com/jaysenshi) |
